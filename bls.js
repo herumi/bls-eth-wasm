@@ -199,6 +199,11 @@
     mod.blsPublicKeyDeserialize = _wrapDeserialize(mod._blsPublicKeyDeserialize)
     mod.blsSignatureDeserialize = _wrapDeserialize(mod._blsSignatureDeserialize)
 
+    mod.blsPublicKeySerializeUncompressed = _wrapSerialize(mod._blsPublicKeySerializeUncompressed)
+    mod.blsSignatureSerializeUncompressed = _wrapSerialize(mod._blsSignatureSerializeUncompressed)
+    mod.blsPublicKeyDeserializeUncompressed = _wrapDeserialize(mod._blsPublicKeyDeserializeUncompressed)
+    mod.blsSignatureDeserializeUncompressed = _wrapDeserialize(mod._blsSignatureDeserializeUncompressed)
+
     mod.blsSecretKeySetLittleEndian = _wrapInput(mod._blsSecretKeySetLittleEndian, 1)
     mod.blsHashToSecretKey = _wrapInput(mod._blsHashToSecretKey, 1)
     mod.blsSign = _wrapInput(mod._blsSign, 2)
@@ -446,6 +451,12 @@
       serialize () {
         return this._getter(mod.blsPublicKeySerialize)
       }
+      deserializeUncompressed (s) {
+        this._setter(mod.blsPublicKeyDeserializeUncompressed, s)
+      }
+      serializeUncompressed () {
+        return this._getter(mod.blsPublicKeySerializeUncompressed)
+      }
       add (rhs) {
         this._update(mod._blsPublicKeyAdd, rhs)
       }
@@ -494,6 +505,12 @@
       }
       serialize () {
         return this._getter(mod.blsSignatureSerialize)
+      }
+      deserializeUncompressed (s) {
+        this._setter(mod.blsSignatureDeserializeUncompressed, s)
+      }
+      serializeUncompressed () {
+        return this._getter(mod.blsSignatureSerializeUncompressed)
       }
       add (rhs) {
         this._update(mod._blsSignatureAdd, rhs)

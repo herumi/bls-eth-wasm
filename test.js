@@ -37,15 +37,24 @@ function serializeSubTest (t, Cstr) {
   assert.deepEqual(t.serialize(), t2.serialize())
 }
 
+function serializeUncompressedSubTest (t, Cstr) {
+  const b = t.serializeUncompressed()
+  const t2 = new Cstr()
+  t2.deserializeUncompressed(b)
+  assert(t.isEqual(t2))
+}
+
 function serializeTest () {
   const sec = new bls.SecretKey()
   sec.setByCSPRNG()
   serializeSubTest(sec, bls.SecretKey)
   const pub = sec.getPublicKey()
   serializeSubTest(pub, bls.PublicKey)
+  serializeUncompressedSubTest(pub, bls.PublicKey)
   const msg = 'abc'
   const sig = sec.sign(msg)
   serializeSubTest(sig, bls.Signature)
+  serializeUncompressedSubTest(sig, bls.Signature)
   const id = new bls.Id()
   id.setStr('12345')
   serializeSubTest(id, bls.Id)

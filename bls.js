@@ -525,19 +525,6 @@
       r.deserializeHexStr(s)
       return r
     }
-    exports.hashWithDomainToFp2 = msg => {
-      if (msg.length != MSG_SIZE) throw new Error('bad length')
-      const FP2_SIZE = 96
-      const bufPos = _malloc(FP2_SIZE)
-      const msgPos = _malloc(MSG_SIZE)
-      mod.HEAP8.set(msg, msgPos)
-      mod._blsHashWithDomainToFp2(bufPos, msgPos)
-      const r = new Uint8Array(FP2_SIZE)
-      r.set(mod.HEAP8.subarray(bufPos, bufPos + r.length))
-      _free(msgPos)
-      _free(bufPos)
-      return r
-    }
     exports.blsInit(curveType)
     console.log('finished')
   } // setup()

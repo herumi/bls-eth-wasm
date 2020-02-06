@@ -466,6 +466,9 @@
       recover (secVec, idVec) {
         callRecover(mod._blsPublicKeyRecover, this, BLS_PUBLICKEY_SIZE, secVec, idVec)
       }
+      isValidOrder () {
+        return _getter(mod._blsPublicKeyIsValidOrder)
+      }
       verify (sig, m) {
         const pubPos = this._allocAndCopy()
         const sigPos = sig._allocAndCopy()
@@ -518,6 +521,9 @@
       recover (secVec, idVec) {
         callRecover(mod._blsSignatureRecover, this, BLS_SIGNATURE_SIZE, secVec, idVec)
       }
+      isValidOrder () {
+        return this._getter(mod._blsSignatureIsValidOrder)
+      }
       // this = aggSig
       verifyAggregatedHashWithDomain (pubVec, msgVec) {
         if (pubVec.length != msgVec.length) throw new Error('bad length')
@@ -536,11 +542,73 @@
         _free(aggSigPos)
         return r != 0
       }
+      // this = aggSig
+      aggregate (sigVec) {
+        const n = sigVec.length
+        const aggSigPos = this._allocAndCopy()
+        const sigVecPos = _malloc(BLS_SIGNATURE_SIZE * n)
+        for (let i = 0; i < n; i++) {
+          mod.HEAP32.set(sigVec[i].a_, (sigVecPos + BLS_SIGNATURE_SIZE * i) / 4)
+        }
+        const r = mod._blsAggregateSignature(aggSigPos, sigVecPos, n)
+        _free(sigVecPos)
+        this._saveAndFree(aggSigPos)
+        return r == 1
+      }
+      // this = aggSig
+      fastAggregateVerify (pubVec, msg) {
+        const n = pubVec.length
+        const msgSize = msg.length
+        const aggSigPos = this._allocAndCopy()
+        const pubVecPos = _malloc(BLS_PUBLICKEY_SIZE * n)
+        const msgPos = _malloc(msgSize)
+        for (let i = 0; i < n; i++) {
+          mod.HEAP32.set(pubVec[i].a_, (pubVecPos + BLS_PUBLICKEY_SIZE * i) / 4)
+        }
+        mod.HEAP8.set(msg, msgPos)
+        const r = mod._blsFastAggregateVerify(aggSigPos, pubVecPos, n, msgPos, msgSize)
+        _free(msgPos)
+        _free(pubVecPos)
+        _free(aggSigPos)
+        return r == 1
+      }
+      // this = aggSig
+      // msgVec = (32 * pubVec.length)-size Uint8Array
+      aggregateVerifyNoCheck (pubVec, msgVec) {
+        const n = pubVec.length
+        const msgSize = 32
+        if (n == 0 || msgVec.length != msgSize * n) {
+          return false
+        }
+        const aggSigPos = this._allocAndCopy()
+        const pubVecPos = _malloc(BLS_PUBLICKEY_SIZE * n)
+        const msgPos = _malloc(msgVec.length)
+        for (let i = 0; i < n; i++) {
+          mod.HEAP32.set(pubVec[i].a_, (pubVecPos + BLS_PUBLICKEY_SIZE * i) / 4)
+        }
+        mod.HEAP8.set(msgVec, msgPos)
+        const r = mod._blsAggregateVerifyNoCheck(aggSigPos, pubVecPos, msgPos, msgSize, n)
+        _free(msgPos)
+        _free(pubVecPos)
+        _free(aggSigPos)
+        return r == 1
+      }
     }
     exports.deserializeHexStrToSignature = s => {
       const r = new exports.Signature()
       r.deserializeHexStr(s)
       return r
+    }
+    exports.setETHmode = (mode) => {
+      mod._blsSetETHmode(mode)
+    }
+    // make setter check the correctness of the order if doVerify
+    exports.verifySignatureOrder = (doVerify) => {
+      mod._blsSignatureVerifyOrder(doVerify)
+    }
+    // make setter check the correctness of the order if doVerify
+    exports.verifyPublicKeyOrder = (doVerify) => {
+      mod._blsPublicKeyVerifyOrder(doVerify)
     }
     exports.blsInit(curveType)
     console.log('finished')

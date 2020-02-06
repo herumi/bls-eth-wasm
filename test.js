@@ -333,11 +333,7 @@ function ethAggregateVerifyNoCheckTest () {
     msg += msgHexTbl[i]
   }
   const msgVec = bls.fromHexStr(msg)
-/*
-  if !AreAllMsgDifferent(msgVec, 32) {
-    t.Fatalf("bad msgVec")
-  }
-*/
+  assert(bls.areAllMsgDifferent(msgVec, 32))
   assert(sig.aggregateVerifyNoCheck(pubVec, msgVec))
 }
 
@@ -380,6 +376,34 @@ function ethFastAggregateVerifyTest () {
   })
 }
 
+function blsAggregateVerifyNoCheckTestOne (n) {
+  console.log(`blsAggregateVerifyNoCheckTestOne ${n}`)
+  const msgSize = 32
+  const pubs = []
+  const sigs = []
+  const msgs = new Uint8Array(msgSize * n)
+  let msgHex = ""
+  for (let i = 0; i < n; i++) {
+    var sec = new bls.SecretKey()
+    sec.setByCSPRNG()
+    pubs.push(sec.getPublicKey())
+    msgs[msgSize * i] = i
+    sigs.push(sec.sign(msgs.subarray(msgSize * i, msgSize * (i+1))))
+  }
+  assert(bls.areAllMsgDifferent(msgs, msgSize))
+  const aggSig = new bls.Signature()
+  aggSig.aggregate(sigs)
+  assert(aggSig.aggregateVerifyNoCheck(pubs, msgs))
+  msgs[1] = 1
+  assert(!aggSig.aggregateVerifyNoCheck(pubs, msgs))
+}
+
+function blsAggregateVerifyNoCheckTest () {
+  const tbl = [1, 2, 15, 16, 17, 50]
+  tbl.forEach((n) => {
+    blsAggregateVerifyNoCheckTestOne(n)
+  })
+}
 
 function ethTest () {
   bls.setETHmode(1)
@@ -387,4 +411,5 @@ function ethTest () {
   ethSignTest()
   ethAggregateVerifyNoCheckTest()
   ethFastAggregateVerifyTest()
+  blsAggregateVerifyNoCheckTest()
 }

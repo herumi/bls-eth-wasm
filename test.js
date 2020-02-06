@@ -341,10 +341,50 @@ function ethAggregateVerifyNoCheckTest () {
   assert(sig.aggregateVerifyNoCheck(pubVec, msgVec))
 }
 
+function ethFastAggregateVerifyTest () {
+  const fileName = "test/fast_aggregate_verify.txt"
+  const rs = fs.createReadStream(fileName)
+  const rl = readline.createInterface({input:rs})
+
+  let i = 0
+  let pubVec = []
+  let msg = ''
+  let sig = null
+  rl.on('line', (line) => {
+    const [k, v] = line.split(' ')
+    if (k == 'pub') {
+      pubVec.push(bls.deserializeHexStrToPublicKey(v))
+    } else if (k == 'msg') {
+      msg = bls.fromHexStr(v)
+    } else if (k == 'sig') {
+      console.log(`i=${i}`)
+      try {
+        sig = bls.deserializeHexStrToSignature(v)
+      } catch (e) {
+        console.log(`bad sig ${v}`)
+        sig = null
+      }
+    } else if (k == 'out') {
+      i++
+      if (!sig) return
+      const out = v == 'true'
+      if (!sig.isValidOrder()) {
+        console.log('bad order')
+        pubVec = []
+        return
+      }
+      const r = sig.fastAggregateVerify(pubVec, msg)
+      assert(r == out)
+      pubVec = []
+    }
+  })
+}
+
 
 function ethTest () {
   bls.setETHmode(1)
   ethAggregateTest()
   ethSignTest()
   ethAggregateVerifyNoCheckTest()
+  ethFastAggregateVerifyTest()
 }

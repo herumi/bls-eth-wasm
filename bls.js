@@ -610,6 +610,17 @@
     exports.verifyPublicKeyOrder = (doVerify) => {
       mod._blsPublicKeyVerifyOrder(doVerify)
     }
+    exports.areAllMsgDifferent = (msgs, msgSize) => {
+      const n = msgs.length / msgSize
+      if (msgs.length != n * msgSize) return false
+      h = {}
+      for (let i = 0; i < n; i++) {
+        const m = msgs.subarray(i * msgSize, (i + 1) * msgSize)
+        if (m in h) return false
+        h[m] = true
+      }
+      return true
+    }
     exports.blsInit(curveType)
     console.log('finished')
   } // setup()

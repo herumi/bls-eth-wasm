@@ -16,7 +16,7 @@ const curveTest = (curveType, name) => {
         shareTest()
         addTest()
         aggTest()
-        if (curveType == bls.BLS12_381) {
+        if (curveType === bls.BLS12_381) {
           ethTest()
         }
         console.log('all ok')
@@ -217,7 +217,7 @@ function shareTest () {
 
 function addTest () {
   const n = 5
-  const m = "abc"
+  const m = 'abc'
   const sec = []
   const pub = []
   const sig = []
@@ -261,10 +261,10 @@ function aggTest () {
 
 function ethAggregateTest () {
   const sigHexTbl = [
-    "b2a0bd8e837fc2a1b28ee5bcf2cddea05f0f341b375e51de9d9ee6d977c2813a5c5583c19d4e7db8d245eebd4e502163076330c988c91493a61b97504d1af85fdc167277a1664d2a43af239f76f176b215e0ee81dc42f1c011dc02d8b0a31e32",
-    "b2deb7c656c86cb18c43dae94b21b107595486438e0b906f3bdb29fa316d0fc3cab1fc04c6ec9879c773849f2564d39317bfa948b4a35fc8509beafd3a2575c25c077ba8bca4df06cb547fe7ca3b107d49794b7132ef3b5493a6ffb2aad2a441",
-    "a1db7274d8981999fee975159998ad1cc6d92cd8f4b559a8d29190dad41dc6c7d17f3be2056046a8bcbf4ff6f66f2a360860fdfaefa91b8eca875d54aca2b74ed7148f9e89e2913210a0d4107f68dbc9e034acfc386039ff99524faf2782de0e"]
-  const sigHex = "973ab0d765b734b1cbb2557bcf52392c9c7be3cd21d5bd28572d99f618c65e921f0dd82560cc103feb9f000c23c00e660e1364ed094f137e1045e73116cd75903af446df3c357540a4970ec367a7f7fa7493a5db27ca322c48d57740908585e8"
+    'b2a0bd8e837fc2a1b28ee5bcf2cddea05f0f341b375e51de9d9ee6d977c2813a5c5583c19d4e7db8d245eebd4e502163076330c988c91493a61b97504d1af85fdc167277a1664d2a43af239f76f176b215e0ee81dc42f1c011dc02d8b0a31e32',
+    'b2deb7c656c86cb18c43dae94b21b107595486438e0b906f3bdb29fa316d0fc3cab1fc04c6ec9879c773849f2564d39317bfa948b4a35fc8509beafd3a2575c25c077ba8bca4df06cb547fe7ca3b107d49794b7132ef3b5493a6ffb2aad2a441',
+    'a1db7274d8981999fee975159998ad1cc6d92cd8f4b559a8d29190dad41dc6c7d17f3be2056046a8bcbf4ff6f66f2a360860fdfaefa91b8eca875d54aca2b74ed7148f9e89e2913210a0d4107f68dbc9e034acfc386039ff99524faf2782de0e']
+  const sigHex = '973ab0d765b734b1cbb2557bcf52392c9c7be3cd21d5bd28572d99f618c65e921f0dd82560cc103feb9f000c23c00e660e1364ed094f137e1045e73116cd75903af446df3c357540a4970ec367a7f7fa7493a5db27ca322c48d57740908585e8'
   const n = sigHexTbl.length
   const sigVec = []
   for (let i = 0; i < n; i++) {
@@ -274,7 +274,7 @@ function ethAggregateTest () {
   const aggSig = new bls.Signature()
   aggSig.aggregate(sigVec)
   const s = aggSig.serializeToHexStr()
-  assert(s == sigHex)
+  assert(s === sigHex)
 }
 
 function ethSignOneTest (secHex, msgHex, sigHex) {
@@ -285,26 +285,25 @@ function ethSignOneTest (secHex, msgHex, sigHex) {
   const sig = sec.sign(msg)
   assert(pub.verify(sig, msg))
   const s = sig.serializeToHexStr()
-  assert(s == sigHex)
+  assert(s === sigHex)
 }
 
-
 function ethSignTest () {
-  let secHex = "47b8192d77bf871b62e87859d653922725724a5c031afeabc60bcef5ff665138"
-  let msgHex = "0000000000000000000000000000000000000000000000000000000000000000"
-  const sigHex = "b2deb7c656c86cb18c43dae94b21b107595486438e0b906f3bdb29fa316d0fc3cab1fc04c6ec9879c773849f2564d39317bfa948b4a35fc8509beafd3a2575c25c077ba8bca4df06cb547fe7ca3b107d49794b7132ef3b5493a6ffb2aad2a441"
+  let secHex = '47b8192d77bf871b62e87859d653922725724a5c031afeabc60bcef5ff665138'
+  let msgHex = '0000000000000000000000000000000000000000000000000000000000000000'
+  const sigHex = 'b2deb7c656c86cb18c43dae94b21b107595486438e0b906f3bdb29fa316d0fc3cab1fc04c6ec9879c773849f2564d39317bfa948b4a35fc8509beafd3a2575c25c077ba8bca4df06cb547fe7ca3b107d49794b7132ef3b5493a6ffb2aad2a441'
 
   ethSignOneTest(secHex, msgHex, sigHex)
-  const fileName = "test/sign.txt"
+  const fileName = 'test/sign.txt'
   const rs = fs.createReadStream(fileName)
-  const rl = readline.createInterface({input:rs})
+  const rl = readline.createInterface({input: rs})
   rl.on('line', (line) => {
     const [k, v] = line.split(' ')
-    if (k == 'sec') {
+    if (k === 'sec') {
       secHex = v
-    } else if (k == 'msg') {
+    } else if (k === 'msg') {
       msgHex = v
-    } else if (k == 'out') {
+    } else if (k === 'out') {
       ethSignOneTest(secHex, msgHex, v)
     } else {
       assert(false)
@@ -314,20 +313,20 @@ function ethSignTest () {
 
 function ethAggregateVerifyNoCheckTest () {
   const pubHexTbl = [
-    "a491d1b0ecd9bb917989f0e74f0dea0422eac4a873e5e2644f368dffb9a6e20fd6e10c1b77654d067c0618f6e5a7f79a",
-    "b301803f8b5ac4a1133581fc676dfedc60d891dd5fa99028805e5ea5b08d3491af75d0707adab3b70c6a6a580217bf81",
-    "b53d21a4cfd562c469cc81514d4ce5a6b577d8403d32a394dc265dd190b47fa9f829fdd7963afdf972e5e77854051f6f",
+    'a491d1b0ecd9bb917989f0e74f0dea0422eac4a873e5e2644f368dffb9a6e20fd6e10c1b77654d067c0618f6e5a7f79a',
+    'b301803f8b5ac4a1133581fc676dfedc60d891dd5fa99028805e5ea5b08d3491af75d0707adab3b70c6a6a580217bf81',
+    'b53d21a4cfd562c469cc81514d4ce5a6b577d8403d32a394dc265dd190b47fa9f829fdd7963afdf972e5e77854051f6f'
   ]
   const msgHexTbl = [
-    "0000000000000000000000000000000000000000000000000000000000000000",
-    "5656565656565656565656565656565656565656565656565656565656565656",
-    "abababababababababababababababababababababababababababababababab",
+    '0000000000000000000000000000000000000000000000000000000000000000',
+    '5656565656565656565656565656565656565656565656565656565656565656',
+    'abababababababababababababababababababababababababababababababab'
   ]
-  const sigHex = "82f5bfe5550ce639985a46545e61d47c5dd1d5e015c1a82e20673698b8e02cde4f81d3d4801f5747ad8cfd7f96a8fe50171d84b5d1e2549851588a5971d52037218d4260b9e4428971a5c1969c65388873f1c49a4c4d513bdf2bc478048a18a8"
+  const sigHex = '82f5bfe5550ce639985a46545e61d47c5dd1d5e015c1a82e20673698b8e02cde4f81d3d4801f5747ad8cfd7f96a8fe50171d84b5d1e2549851588a5971d52037218d4260b9e4428971a5c1969c65388873f1c49a4c4d513bdf2bc478048a18a8'
   const n = pubHexTbl.length
   const sig = bls.deserializeHexStrToSignature(sigHex)
   const pubVec = []
-  let msg = ""
+  let msg = ''
   for (let i = 0; i < n; i++) {
     pubVec.push(bls.deserializeHexStrToPublicKey(pubHexTbl[i]))
     msg += msgHexTbl[i]
@@ -338,9 +337,9 @@ function ethAggregateVerifyNoCheckTest () {
 }
 
 function ethFastAggregateVerifyTest () {
-  const fileName = "test/fast_aggregate_verify.txt"
+  const fileName = 'test/fast_aggregate_verify.txt'
   const rs = fs.createReadStream(fileName)
-  const rl = readline.createInterface({input:rs})
+  const rl = readline.createInterface({input: rs})
 
   let i = 0
   let pubVec = []
@@ -348,11 +347,11 @@ function ethFastAggregateVerifyTest () {
   let sig = null
   rl.on('line', (line) => {
     const [k, v] = line.split(' ')
-    if (k == 'pub') {
+    if (k === 'pub') {
       pubVec.push(bls.deserializeHexStrToPublicKey(v))
-    } else if (k == 'msg') {
+    } else if (k === 'msg') {
       msg = bls.fromHexStr(v)
-    } else if (k == 'sig') {
+    } else if (k === 'sig') {
       console.log(`i=${i}`)
       try {
         sig = bls.deserializeHexStrToSignature(v)
@@ -360,17 +359,17 @@ function ethFastAggregateVerifyTest () {
         console.log(`bad sig ${v}`)
         sig = null
       }
-    } else if (k == 'out') {
+    } else if (k === 'out') {
       i++
       if (!sig) return
-      const out = v == 'true'
+      const out = v === 'true'
       if (!sig.isValidOrder()) {
         console.log('bad order')
         pubVec = []
         return
       }
       const r = sig.fastAggregateVerify(pubVec, msg)
-      assert(r == out)
+      assert(r === out)
       pubVec = []
     }
   })
@@ -382,13 +381,12 @@ function blsAggregateVerifyNoCheckTestOne (n) {
   const pubs = []
   const sigs = []
   const msgs = new Uint8Array(msgSize * n)
-  let msgHex = ""
   for (let i = 0; i < n; i++) {
     var sec = new bls.SecretKey()
     sec.setByCSPRNG()
     pubs.push(sec.getPublicKey())
     msgs[msgSize * i] = i
-    sigs.push(sec.sign(msgs.subarray(msgSize * i, msgSize * (i+1))))
+    sigs.push(sec.sign(msgs.subarray(i * msgSize, (i + 1) * msgSize)))
   }
   assert(bls.areAllMsgDifferent(msgs, msgSize))
   const aggSig = new bls.Signature()

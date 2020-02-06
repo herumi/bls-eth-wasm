@@ -18,7 +18,7 @@ then, you can use the following functions.
 
 bls-eth-wasm | eth2.0 spec name|
 ------|-----------------|
-SecretKey::sing|Sign|
+SecretKey::sign|Sign|
 PublicKey::verify|Verify|
 Sign::aggregate|Aggregate|
 Sign::fastAggregateVerify|FastAggregateVerify|

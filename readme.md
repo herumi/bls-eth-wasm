@@ -3,6 +3,38 @@
 
 # Abstract
 This module is built with `BLS_ETH=1` for Ethereum 2.0 spec.
+
+# News
+The new [eth2.0 functions](https://github.com/ethereum/eth2.0-specs/blob/dev/specs/phase0/beacon-chain.md#bls-signatures) are supported.
+
+Init as the followings:
+
+```
+bls.init(bls.BLS12_381)
+bls.setETHmode(1)
+```
+
+then, you can use the following functions.
+
+bls-eth-wasm | eth2.0 spec name|
+------|-----------------|
+SecretKey::sing|Sign|
+PublicKey::verify|Verify|
+Sign::aggregate|Aggregate|
+Sign::fastAggregateVerify|FastAggregateVerify|
+Sign::aggregateVerifyNoCheck|AggregateVerify|
+
+The size of message must be 32 byte.
+
+Check functions:
+- verifySignatureOrder ; make `deserialize` check the correctness of the order
+- Sign::isValidOrder ; check the correctness of the order
+- verifyPublicKeyOrder ; make `deserialize` check the correctness of the order
+- PublicKey::isValidOrder ; check the correctness of the order
+- areAllMsgDifferent ; check that all messages are different each other
+
+
+# Old eth2.0 spec
 The `msg` in the following means 40 bytes Uint8Array data.
 - `SecretKey.signHashWithDomain(msg)`
   - sign msg by secretKey
@@ -17,7 +49,7 @@ The `msg` in the following means 40 bytes Uint8Array data.
 
 see [bls](https://github.com/herumi/bls)
 
-## for Node.js
+## For Node.js
 node test.js
 
 # License
@@ -27,4 +59,4 @@ http://opensource.org/licenses/BSD-3-Clause
 
 # Author
 
-光成滋生 MITSUNARI Shigeo(herumi@nifty.com)
+MITSUNARI Shigeo(herumi@nifty.com)

@@ -467,7 +467,7 @@
         callRecover(mod._blsPublicKeyRecover, this, BLS_PUBLICKEY_SIZE, secVec, idVec)
       }
       isValidOrder () {
-        return _getter(mod._blsPublicKeyIsValidOrder)
+        return this._getter(mod._blsPublicKeyIsValidOrder)
       }
       verify (sig, m) {
         const pubPos = this._allocAndCopy()

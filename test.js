@@ -387,6 +387,8 @@ function blsAggregateVerifyNoCheckTestOne (n) {
     pubs.push(sec.getPublicKey())
     msgs[msgSize * i] = i
     sigs.push(sec.sign(msgs.subarray(i * msgSize, (i + 1) * msgSize)))
+    assert(pubs[i].isValidOrder())
+    assert(sigs[i].isValidOrder())
   }
   assert(bls.areAllMsgDifferent(msgs, msgSize))
   const aggSig = new bls.Signature()

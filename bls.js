@@ -205,6 +205,7 @@
     mod.blsSignatureDeserializeUncompressed = _wrapDeserialize(mod._blsSignatureDeserializeUncompressed)
 
     mod.blsSecretKeySetLittleEndian = _wrapInput(mod._blsSecretKeySetLittleEndian, 1)
+    mod.blsSecretKeySetLittleEndianMod = _wrapInput(mod._blsSecretKeySetLittleEndianMod, 1)
     mod.blsHashToSecretKey = _wrapInput(mod._blsHashToSecretKey, 1)
     mod.blsSign = _wrapInput(mod._blsSign, 2)
     mod.blsVerify = _wrapInput(mod._blsVerify, 2, true)
@@ -340,6 +341,9 @@
       setLittleEndian (s) {
         this._setter(mod.blsSecretKeySetLittleEndian, s)
       }
+      setLittleEndianMod (s) {
+        this._setter(mod.blsSecretKeySetLittleEndianMod, s)
+      }
       setByCSPRNG () {
         const a = new Uint8Array(BLS_ID_SIZE)
         crypto.getRandomValues(a)
@@ -382,6 +386,9 @@
       }
       setLittleEndian (s) {
         this._setter(mod.blsSecretKeySetLittleEndian, s)
+      }
+      setLittleEndianMod (s) {
+        this._setter(mod.blsSecretKeySetLittleEndianMod, s)
       }
       setByCSPRNG () {
         const a = new Uint8Array(BLS_SECRETKEY_SIZE)

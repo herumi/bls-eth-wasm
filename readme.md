@@ -5,7 +5,16 @@
 This module is built with `BLS_ETH=1` for Ethereum 2.0 spec.
 
 # News
-The new [eth2.0 functions](https://github.com/ethereum/eth2.0-specs/blob/dev/specs/phase0/beacon-chain.md#bls-signatures) are supported.
+`setETHmode()` supports hash-to-curve defined at [draft-irtf-cfrg-hash-to-curve](https://cfrg.github.io/draft-irtf-cfrg-hash-to-curve/draft-irtf-cfrg-hash-to-curve.txt) at March 2020.
+
+Init as the followings:
+
+```
+bls.init(bls.BLS12_381)
+bls.setETHmode(2)
+```
+
+(old) The new [eth2.0 functions](https://github.com/ethereum/eth2.0-specs/blob/dev/specs/phase0/beacon-chain.md#bls-signatures) are supported. This mode will be removed in the future.
 
 Init as the followings:
 

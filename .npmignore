@@ -2,5 +2,6 @@ bls-demo.html
 bls-demo.js
 .nyc_output/
 coverage/
+test/
 t.js
 .travis.yml

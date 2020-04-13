@@ -13,14 +13,16 @@
 
   const setup = (exports, curveType) => {
     const mod = exports.mod
+    const ethMode = true
+    const defaultCurve = ethMode ? exports.BLS12_381 : exports.BN254
     const MCLBN_FP_UNIT_SIZE = 6
-    const MCLBN_FR_UNIT_SIZE = 4
-    const BLS_COMPILER_TIME_VAR_ADJ = 200
+    const MCLBN_FR_UNIT_SIZE = ethMode ? 4 : 6
+    const BLS_COMPILER_TIME_VAR_ADJ = ethMode ? 200 : 0
     const MCLBN_COMPILED_TIME_VAR = (MCLBN_FR_UNIT_SIZE * 10 + MCLBN_FP_UNIT_SIZE) + BLS_COMPILER_TIME_VAR_ADJ
     const BLS_ID_SIZE = MCLBN_FR_UNIT_SIZE * 8
     const BLS_SECRETKEY_SIZE = MCLBN_FP_UNIT_SIZE * 8
-    const BLS_PUBLICKEY_SIZE = BLS_SECRETKEY_SIZE * 3
-    const BLS_SIGNATURE_SIZE = BLS_SECRETKEY_SIZE * 3 * 2
+    const BLS_PUBLICKEY_SIZE = BLS_SECRETKEY_SIZE * 3 * (ethMode ? 1 : 2)
+    const BLS_SIGNATURE_SIZE = BLS_SECRETKEY_SIZE * 3 * (ethMode ? 2 : 1)
     const MSG_SIZE = 40
     exports.MSG_SIZE = MSG_SIZE
 
@@ -603,6 +605,7 @@
       r.deserializeHexStr(s)
       return r
     }
+    // 0 (draft-05) 1 (draft-06)
     exports.setETHmode = (mode) => {
       mod._blsSetETHmode(mode)
     }
@@ -626,7 +629,6 @@
       return true
     }
     exports.blsInit(curveType)
-    console.log('finished')
   } // setup()
   const _cryptoGetRandomValues = function(p, n) {
     const a = new Uint8Array(n)

@@ -11,6 +11,9 @@
   exports.BN381_1 = 1
   exports.BLS12_381 = 5
   exports.ethMode = true
+  exports.ETH_MODE_DRAFT_05 = 1
+  exports.ETH_MODE_DRAFT_06 = 2
+  exports.ETH_MODE_DRAFT_07 = 3
 
   const setup = (exports, curveType) => {
     const mod = exports.mod
@@ -603,9 +606,9 @@
       r.deserializeHexStr(s)
       return r
     }
-    // 0 (draft-05) 1 (draft-06) 2 (draft-07)
+    // 1 (draft-05) 2 (draft-06) 3 (draft-07)
     exports.setETHmode = (mode) => {
-      mod._blsSetETHmode(mode)
+      if (mod._blsSetETHmode(mode) != 0) throw new Error(`bad setETHmode ${mode}`)
     }
     // make setter check the correctness of the order if doVerify
     exports.verifySignatureOrder = (doVerify) => {

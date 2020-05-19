@@ -5,7 +5,8 @@
 This module is built with `BLS_ETH=1` for Ethereum 2.0 spec.
 
 # News
-`setETHmode()` supports hash-to-curve defined at [draft-irtf-cfrg-hash-to-curve](https://cfrg.github.io/draft-irtf-cfrg-hash-to-curve/draft-irtf-cfrg-hash-to-curve.txt) at March 2020.
+- 2020/May/19 : Call `bls.setETHmode(bls.ETH_MODE_DRAFT_07)` once after `bls.init()` for `BLS_ETH_MODE_DRAFT_07` defined at [BLS12381G2_XMD:SHA-256_SSWU_RO_](https://www.ietf.org/id/draft-irtf-cfrg-hash-to-curve-07.html#name-bls12381g2_xmdsha-256_sswu_).
+- `setETHmode()` supports hash-to-curve defined at [draft-irtf-cfrg-hash-to-curve](https://cfrg.github.io/draft-irtf-cfrg-hash-to-curve/draft-irtf-cfrg-hash-to-curve.txt) at March 2020.
 
 Init as the followings:
 
@@ -69,3 +70,6 @@ http://opensource.org/licenses/BSD-3-Clause
 # Author
 
 MITSUNARI Shigeo(herumi@nifty.com)
+
+# Sponsors welcome
+[GitHub Sponsor](https://github.com/sponsors/herumi)

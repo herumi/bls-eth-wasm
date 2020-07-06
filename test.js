@@ -9,19 +9,17 @@ const curveTest = (curveType, name) => {
   bls.init(curveType)
     .then(() => {
       try {
-        if (curveType == bls.BLS12_381) {
-          bls.setETHmode(bls.ETH_MODE_DRAFT_07)
-        }
+        bls.setETHmode(bls.ETH_MODE_DRAFT_07)
         console.log(`name=${name} curve order=${bls.getCurveOrder()}`)
+/*
         serializeTest()
         signatureTest()
         miscTest()
         shareTest()
         addTest()
         aggTest()
-        if (curveType === bls.BLS12_381) {
-          ethTest()
-        }
+*/
+        ethTest()
         console.log('all ok')
         benchAll()
       } catch (e) {
@@ -336,6 +334,15 @@ function ethAggregateVerifyNoCheckTest () {
   assert(sig.aggregateVerifyNoCheck(pubVec, msgVec))
 }
 
+function verifyDeserializeSignature (sigHex) {
+  try {
+    return bls.deserializeHexStrToSignature(sigHex)
+  } catch (e) {
+    console.log(`bad sig ${sigHex}`)
+    return new bls.Signature()
+  }
+}
+
 function ethFastAggregateVerifyTest () {
   const fileName = 'test/fast_aggregate_verify.txt'
   const rs = fs.createReadStream(fileName)
@@ -352,16 +359,9 @@ function ethFastAggregateVerifyTest () {
     } else if (k === 'msg') {
       msg = bls.fromHexStr(v)
     } else if (k === 'sig') {
-      console.log(`i=${i}`)
-      try {
-        sig = bls.deserializeHexStrToSignature(v)
-      } catch (e) {
-        console.log(`bad sig ${v}`)
-        sig = null
-      }
+      sig = verifyDeserializeSignature(v)
     } else if (k === 'out') {
       i++
-      if (!sig) return
       const out = v === 'true'
       if (!sig.isValidOrder()) {
         console.log('bad order')
@@ -412,10 +412,44 @@ function blsDraft07 () {
   ethSignOneTest(secHex, msgHex, sigHex)
 }
 
+function ethVerifyOneTest (pubHex, msgHex, sigHex, outStr) {
+  const pub = bls.deserializeHexStrToPublicKey(pubHex)
+  const msg = bls.fromHexStr(msgHex)
+  const expect = outStr === "true"
+  const sig = verifyDeserializeSignature(sigHex)
+  const b = pub.verify(sig, msg)
+  assert(b == expect)
+}
+
+function ethVerifyTest () {
+  const fileName = "test/verify.txt"
+console.log(`fileName=${fileName}`)
+  const rs = fs.createReadStream(fileName)
+  const rl = readline.createInterface({input: rs})
+  let pubHex = ''
+  let msgHex = ''
+  let sigHex = ''
+  let outStr = ''
+  rl.on('line', (line) => {
+    const [k, v] = line.split(' ')
+    if (k == 'pub') {
+      pubHex = v
+    } else if (k === 'msg') {
+      msgHex = v
+    } else if (k === 'sig') {
+      sigHex = v
+    } else if (k === 'out') {
+      outStr = v
+      ethVerifyOneTest(pubHex, msgHex, sigHex, outStr)
+    }
+  })
+}
+
 function ethTest () {
   blsDraft07()
   ethAggregateTest()
   ethSignTest()
+  ethVerifyTest()
 //  ethAggregateVerifyNoCheckTest()
   ethFastAggregateVerifyTest()
   blsAggregateVerifyNoCheckTest()

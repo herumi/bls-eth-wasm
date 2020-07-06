@@ -9,7 +9,6 @@ const curveTest = (curveType, name) => {
   bls.init(curveType)
     .then(() => {
       try {
-        bls.setETHmode(bls.ETH_MODE_DRAFT_07)
         console.log(`name=${name} curve order=${bls.getCurveOrder()}`)
         serializeTest()
         signatureTest()

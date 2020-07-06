@@ -630,6 +630,9 @@
       return true
     }
     exports.blsInit(curveType)
+    if (exports.ethMode) {
+      exports.setETHmode(exports.ETH_MODE_DRAFT_07)
+    }
   } // setup()
   const _cryptoGetRandomValues = function(p, n) {
     const a = new Uint8Array(n)

@@ -5,6 +5,7 @@
 This module is built with `BLS_ETH=1` for Ethereum 2.0 spec.
 
 # News
+- 2020/Jul/06 ; `setETHmode(bls.ETH_MODE_DRAFT_07)` is default mode
 - 2020/May/19 : Call `bls.setETHmode(bls.ETH_MODE_DRAFT_07)` once after `bls.init()` for `BLS_ETH_MODE_DRAFT_07` defined at [BLS12381G2_XMD:SHA-256_SSWU_RO_](https://www.ietf.org/id/draft-irtf-cfrg-hash-to-curve-07.html#name-bls12381g2_xmdsha-256_sswu_).
 - `setETHmode()` supports hash-to-curve defined at [draft-irtf-cfrg-hash-to-curve](https://cfrg.github.io/draft-irtf-cfrg-hash-to-curve/draft-irtf-cfrg-hash-to-curve.txt) at March 2020.
 
@@ -12,7 +13,6 @@ Init as the followings:
 
 ```
 bls.init(bls.BLS12_381)
-bls.setETHmode(2)
 ```
 
 (old) The new [eth2.0 functions](https://github.com/ethereum/eth2.0-specs/blob/dev/specs/phase0/beacon-chain.md#bls-signatures) are supported. This mode will be removed in the future.
@@ -21,7 +21,6 @@ Init as the followings:
 
 ```
 bls.init(bls.BLS12_381)
-bls.setETHmode(1)
 ```
 
 then, you can use the following functions.

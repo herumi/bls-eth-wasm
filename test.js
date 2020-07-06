@@ -11,14 +11,12 @@ const curveTest = (curveType, name) => {
       try {
         bls.setETHmode(bls.ETH_MODE_DRAFT_07)
         console.log(`name=${name} curve order=${bls.getCurveOrder()}`)
-/*
         serializeTest()
         signatureTest()
         miscTest()
         shareTest()
         addTest()
         aggTest()
-*/
         ethTest()
         console.log('all ok')
         benchAll()
@@ -314,28 +312,30 @@ function ethSignTest () {
 }
 
 function ethAggregateVerifyNoCheckTest () {
-  const pubHexTbl = [
-    'a491d1b0ecd9bb917989f0e74f0dea0422eac4a873e5e2644f368dffb9a6e20fd6e10c1b77654d067c0618f6e5a7f79a',
-    'b301803f8b5ac4a1133581fc676dfedc60d891dd5fa99028805e5ea5b08d3491af75d0707adab3b70c6a6a580217bf81',
-    'b53d21a4cfd562c469cc81514d4ce5a6b577d8403d32a394dc265dd190b47fa9f829fdd7963afdf972e5e77854051f6f'
-  ]
-  const msgHexTbl = [
-    '0000000000000000000000000000000000000000000000000000000000000000',
-    '5656565656565656565656565656565656565656565656565656565656565656',
-    'abababababababababababababababababababababababababababababababab'
-  ]
-  const sigHex = '82f5bfe5550ce639985a46545e61d47c5dd1d5e015c1a82e20673698b8e02cde4f81d3d4801f5747ad8cfd7f96a8fe50171d84b5d1e2549851588a5971d52037218d4260b9e4428971a5c1969c65388873f1c49a4c4d513bdf2bc478048a18a8'
-  const n = pubHexTbl.length
-  const sig = bls.deserializeHexStrToSignature(sigHex)
-  const pubVec = []
-  let msg = ''
-  for (let i = 0; i < n; i++) {
-    pubVec.push(bls.deserializeHexStrToPublicKey(pubHexTbl[i]))
-    msg += msgHexTbl[i]
-  }
-  const msgVec = bls.fromHexStr(msg)
-  assert(bls.areAllMsgDifferent(msgVec, 32))
-  assert(sig.aggregateVerifyNoCheck(pubVec, msgVec))
+  const fileName = 'test/aggregate_verify.txt'
+  const rs = fs.createReadStream(fileName)
+  const rl = readline.createInterface({input: rs})
+
+  let pubVec = []
+  let msgHex = ''
+  let sig = null
+  rl.on('line', (line) => {
+    const [k, v] = line.split(' ')
+    if (k === 'pub') {
+      pubVec.push(bls.deserializeHexStrToPublicKey(v))
+    } else if (k === 'msg') {
+      msgHex += v
+    } else if (k === 'sig') {
+      sig = verifyDeserializeSignature(v)
+    } else if (k === 'out') {
+      const out = v === 'true'
+      const msgVec = bls.fromHexStr(msgHex)
+      const r = sig.aggregateVerifyNoCheck(pubVec, msgVec)
+      assert(r === out)
+      pubVec = []
+      msgHex = ''
+    }
+  })
 }
 
 function verifyDeserializeSignature (sigHex) {
@@ -453,7 +453,7 @@ function ethTest () {
   ethAggregateTest()
   ethSignTest()
   ethVerifyTest()
-//  ethAggregateVerifyNoCheckTest()
+  ethAggregateVerifyNoCheckTest()
   ethFastAggregateVerifyTest()
   blsAggregateVerifyNoCheckTest()
 }

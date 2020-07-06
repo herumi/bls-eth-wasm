@@ -260,9 +260,9 @@ function aggTest () {
 
 function ethAggregateTest () {
   const fileName = "test/aggregate.txt"
+  console.log(`fileName=${fileName}`)
   const rs = fs.createReadStream(fileName)
   const rl = readline.createInterface({input: rs})
-  console.log('ethAggregateTest')
   let i = 0
   let sigVec = []
   rl.on('line', (line) => {
@@ -295,6 +295,7 @@ function ethSignTest () {
   let secHex = ''
   let msgHex = ''
   const fileName = 'test/sign.txt'
+  console.log(`fileName=${fileName}`)
   const rs = fs.createReadStream(fileName)
   const rl = readline.createInterface({input: rs})
   rl.on('line', (line) => {
@@ -313,6 +314,7 @@ function ethSignTest () {
 
 function ethAggregateVerifyNoCheckTest () {
   const fileName = 'test/aggregate_verify.txt'
+  console.log(`fileName=${fileName}`)
   const rs = fs.createReadStream(fileName)
   const rl = readline.createInterface({input: rs})
 
@@ -427,6 +429,7 @@ function ethVerifyOneTest (pubHex, msgHex, sigHex, outStr) {
 
 function ethVerifyTest () {
   const fileName = "test/verify.txt"
+  console.log(`fileName=${fileName}`)
   const rs = fs.createReadStream(fileName)
   const rl = readline.createInterface({input: rs})
   let pubHex = ''

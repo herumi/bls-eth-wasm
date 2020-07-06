@@ -16,7 +16,6 @@ const curveTest = (curveType, name) => {
         miscTest()
         shareTest()
         addTest()
-        aggTest()
         ethTest()
         console.log('all ok')
         benchAll()
@@ -235,27 +234,6 @@ function addTest () {
   assert(pub[0].verify(sig[0], m))
   const sig2 = sec[0].sign(m)
   assert(sig2.isEqual(sig[0]))
-}
-
-function aggTest () {
-  const n = 100
-  const secVec = []
-  const pubVec = []
-  const sigVec = []
-  const msgVec = []
-  for (let i = 0; i < n; i++) {
-    secVec.push(new bls.SecretKey())
-    secVec[i].setByCSPRNG()
-    pubVec.push(secVec[i].getPublicKey())
-    msgVec.push(new Uint8Array(bls.MSG_SIZE))
-    sigVec.push(secVec[i].signHashWithDomain(msgVec[i]))
-    assert(pubVec[i].verifyHashWithDomain(sigVec[i], msgVec[i]))
-  }
-  const aggSig = sigVec[0]
-  for (let i = 1; i < n; i++) {
-    aggSig.add(sigVec[i])
-  }
-  assert(aggSig.verifyAggregatedHashWithDomain(pubVec, msgVec))
 }
 
 function ethAggregateTest () {

@@ -9,6 +9,9 @@ const curveTest = (curveType, name) => {
   bls.init(curveType)
     .then(() => {
       try {
+        if (curveType == bls.BLS12_381) {
+          bls.setETHmode(bls.ETH_MODE_DRAFT_07)
+        }
         console.log(`name=${name} curve order=${bls.getCurveOrder()}`)
         serializeTest()
         signatureTest()
@@ -289,11 +292,8 @@ function ethSignOneTest (secHex, msgHex, sigHex) {
 }
 
 function ethSignTest () {
-  let secHex = '47b8192d77bf871b62e87859d653922725724a5c031afeabc60bcef5ff665138'
-  let msgHex = '0000000000000000000000000000000000000000000000000000000000000000'
-  const sigHex = 'b2deb7c656c86cb18c43dae94b21b107595486438e0b906f3bdb29fa316d0fc3cab1fc04c6ec9879c773849f2564d39317bfa948b4a35fc8509beafd3a2575c25c077ba8bca4df06cb547fe7ca3b107d49794b7132ef3b5493a6ffb2aad2a441'
-
-  ethSignOneTest(secHex, msgHex, sigHex)
+  let secHex = ''
+  let msgHex = ''
   const fileName = 'test/sign.txt'
   const rs = fs.createReadStream(fileName)
   const rl = readline.createInterface({input: rs})
@@ -405,16 +405,7 @@ function blsAggregateVerifyNoCheckTest () {
   })
 }
 
-function blsDraft06 () {
-  bls.setETHmode(bls.ETH_MODE_DRAFT_06)
-  const secHex = "0000000000000000000000000000000000000000000000000000000000000001"
-  const msgHex = "61736466"
-  const sigHex = "8c858cfbec5fed26cdf9368337900a7bec132b4356e959d9e94b8e9178f8669598a46cd12eadf2226d796f6429b527fc067112244c2b15f3b7f6d5f6304c51a7b087664eaabc3c76e745daeafe6930f5699a6a0d4a24486aa886b3770a63ed32"
-  ethSignOneTest(secHex, msgHex, sigHex)
-}
-
 function blsDraft07 () {
-  bls.setETHmode(bls.ETH_MODE_DRAFT_07)
   const secHex = "0000000000000000000000000000000000000000000000000000000000000001"
   const msgHex = "61736466"
   const sigHex = "b45a264e0d6f8614c4640ea97bae13effd3c74c4e200e3b1596d6830debc952602a7d210eca122dc4f596fa01d7f6299106933abd29477606f64588595e18349afe22ecf2aeeeb63753e88a42ef85b24140847e05620a28422f8c30f1d33b9aa"
@@ -422,12 +413,10 @@ function blsDraft07 () {
 }
 
 function ethTest () {
-  blsDraft06()
   blsDraft07()
-  bls.setETHmode(1)
   ethAggregateTest()
   ethSignTest()
-  ethAggregateVerifyNoCheckTest()
+//  ethAggregateVerifyNoCheckTest()
   ethFastAggregateVerifyTest()
   blsAggregateVerifyNoCheckTest()
 }

@@ -261,21 +261,25 @@ function aggTest () {
 }
 
 function ethAggregateTest () {
-  const sigHexTbl = [
-    'b2a0bd8e837fc2a1b28ee5bcf2cddea05f0f341b375e51de9d9ee6d977c2813a5c5583c19d4e7db8d245eebd4e502163076330c988c91493a61b97504d1af85fdc167277a1664d2a43af239f76f176b215e0ee81dc42f1c011dc02d8b0a31e32',
-    'b2deb7c656c86cb18c43dae94b21b107595486438e0b906f3bdb29fa316d0fc3cab1fc04c6ec9879c773849f2564d39317bfa948b4a35fc8509beafd3a2575c25c077ba8bca4df06cb547fe7ca3b107d49794b7132ef3b5493a6ffb2aad2a441',
-    'a1db7274d8981999fee975159998ad1cc6d92cd8f4b559a8d29190dad41dc6c7d17f3be2056046a8bcbf4ff6f66f2a360860fdfaefa91b8eca875d54aca2b74ed7148f9e89e2913210a0d4107f68dbc9e034acfc386039ff99524faf2782de0e']
-  const sigHex = '973ab0d765b734b1cbb2557bcf52392c9c7be3cd21d5bd28572d99f618c65e921f0dd82560cc103feb9f000c23c00e660e1364ed094f137e1045e73116cd75903af446df3c357540a4970ec367a7f7fa7493a5db27ca322c48d57740908585e8'
-  const n = sigHexTbl.length
-  const sigVec = []
-  for (let i = 0; i < n; i++) {
-    const sig = bls.deserializeHexStrToSignature(sigHexTbl[i])
-    sigVec.push(sig)
-  }
-  const aggSig = new bls.Signature()
-  aggSig.aggregate(sigVec)
-  const s = aggSig.serializeToHexStr()
-  assert(s === sigHex)
+  const fileName = "test/aggregate.txt"
+  const rs = fs.createReadStream(fileName)
+  const rl = readline.createInterface({input: rs})
+  console.log('ethAggregateTest')
+  let i = 0
+  let sigVec = []
+  rl.on('line', (line) => {
+    const [k, v] = line.split(' ')
+    i++
+    if (k == 'sig') {
+      sigVec.push(verifyDeserializeSignature(v))
+    } else if (k == 'out') {
+      const out = verifyDeserializeSignature(v)
+      const agg = new bls.Signature()
+      agg.aggregate(sigVec)
+      assert(agg.isEqual(out))
+      sigVec = []
+    }
+  })
 }
 
 function ethSignOneTest (secHex, msgHex, sigHex) {
@@ -423,7 +427,6 @@ function ethVerifyOneTest (pubHex, msgHex, sigHex, outStr) {
 
 function ethVerifyTest () {
   const fileName = "test/verify.txt"
-console.log(`fileName=${fileName}`)
   const rs = fs.createReadStream(fileName)
   const rl = readline.createInterface({input: rs})
   let pubHex = ''

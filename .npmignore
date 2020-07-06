@@ -4,4 +4,7 @@ bls-demo.js
 coverage/
 test/
 t.js
+bls2.js
+test2.js
+bls.wasm
 .travis.yml

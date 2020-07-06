@@ -363,6 +363,9 @@
       setInt (x) {
         this._setter(mod._blsIdSetInt, x) // same as Id
       }
+      isZero () {
+        return this._getter(mod._blsSecretKeyIsZero) === 1
+      }
       isEqual (rhs) {
         return this._isEqual(mod._blsSecretKeyIsEqual, rhs)
       }
@@ -449,6 +452,9 @@
       constructor () {
         super(BLS_PUBLICKEY_SIZE)
       }
+      isZero () {
+        return this._getter(mod._blsPublicKeyIsZero) === 1
+      }
       isEqual (rhs) {
         return this._isEqual(mod._blsPublicKeyIsEqual, rhs)
       }
@@ -506,6 +512,9 @@
     exports.Signature = class extends Common {
       constructor () {
         super(BLS_SIGNATURE_SIZE)
+      }
+      isZero () {
+        return this._getter(mod._blsSignatureIsZero) === 1
       }
       isEqual (rhs) {
         return this._isEqual(mod._blsSignatureIsEqual, rhs)

@@ -11,6 +11,7 @@ const curveTest = (curveType, name) => {
       try {
         console.log(`name=${name} curve order=${bls.getCurveOrder()}`)
         serializeTest()
+        zeroTest()
         signatureTest()
         miscTest()
         shareTest()
@@ -60,6 +61,21 @@ function serializeTest () {
   const id = new bls.Id()
   id.setStr('12345')
   serializeSubTest(id, bls.Id)
+}
+
+function zeroTest () {
+  let sec = new bls.SecretKey()
+  assert(sec.isZero())
+  sec.setByCSPRNG()
+  assert(!sec.isZero())
+  let pub = new bls.PublicKey()
+  assert(pub.isZero())
+  pub = sec.getPublicKey()
+  assert(!pub.isZero())
+  let sig = new bls.Signature()
+  assert(sig.isZero())
+  sig = sec.sign("abc")
+  assert(!sig.isZero())
 }
 
 function signatureTest () {

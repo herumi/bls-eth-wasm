@@ -1,9 +1,9 @@
 (generator => {
-  if (typeof exports === 'object') {
-    generator(exports, true)
-  } else {
+  if (typeof window === 'object') {
     const exports = {}
     window.bls = generator(exports, false)
+  } else {
+    generator(exports, true)
   }
 })((exports, isNodeJs) => {
   /* eslint-disable */

@@ -170,10 +170,11 @@
         copyFromUint32Array(vecPos + size * i, vec[i].a_)
         copyFromUint32Array(idVecPos + BLS_ID_SIZE * i, idVec[i].a_)
       }
-      func(secPos, vecPos, idVecPos, n)
+      const r = func(secPos, vecPos, idVecPos, n)
       _free(idVecPos)
       _free(vecPos)
       a._saveAndFree(secPos)
+      if (r) throw ('callRecover')
     }
 
     // change curveType

@@ -73,9 +73,10 @@
 //    }
     }
     const copyFromUint32Array = (pos, a) => {
-      for (let i = 0; i < a.length; i++) {
-        mod.HEAP32[pos / 4 + i] = a[i]
-      }
+      mod.HEAP32.set(a, pos / 4)
+//    for (let i = 0; i < a.length; i++) {
+//      mod.HEAP32[pos / 4 + i] = a[i]
+//    }
     }
 //////////////////////////////////
     const _wrapGetStr = (func, returnAsStr = true) => {

@@ -581,7 +581,7 @@
     exports.areAllMsgDifferent = (msgs, msgSize) => {
       const n = msgs.length / msgSize
       if (msgs.length != n * msgSize) return false
-      h = {}
+      const h = {}
       for (let i = 0; i < n; i++) {
         const m = msgs.subarray(i * msgSize, (i + 1) * msgSize)
         if (m in h) return false

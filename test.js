@@ -20,7 +20,7 @@ const curveTest = (curveType, name) => {
         console.log('all ok')
         benchAll()
       } catch (e) {
-        console.log(`TEST FAIL ${e}`)
+        console.log("TEST FAIL", e)
         assert(false)
       }
     })

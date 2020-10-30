@@ -1,5 +1,5 @@
 'use strict'
-const bls = require('./index.js')
+const bls = require('./bls.js')
 const assert = require('assert')
 const fs = require('fs')
 const readline = require('readline')

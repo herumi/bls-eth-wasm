@@ -7,4 +7,4 @@ const bls = {}
 const getRandomValues = crypto.randomFillSync
 blsSetupFactory(createBlsModule, getRandomValues, bls)
 
-module.exports = bls;
+module.exports = bls

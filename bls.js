@@ -644,7 +644,7 @@ function blsSetupFactory(createBlsModule, getRandomValues, exports) {
   }
   exports.init = async (curveType = exports.BN254) => {
     exports.curveType = curveType
-    exports.getRandomValues = getRandomValues;
+    exports.getRandomValues = getRandomValues
     exports.mod = await createBlsModule({
       cryptoGetRandomValues: _cryptoGetRandomValues,
     })
@@ -654,14 +654,15 @@ function blsSetupFactory(createBlsModule, getRandomValues, exports) {
 }
 
 // NodeJS export
-if (typeof exports === 'object' && typeof module === 'object')
-  module.exports = blsSetupFactory;
-else if (typeof define === 'function' && define['amd'])
-  define([], function() { return blsSetupFactory; });
-else if (typeof exports === 'object')
-  exports["blsSetupFactory"] = blsSetupFactory;
+if (typeof exports === 'object' && typeof module === 'object') {
+  module.exports = blsSetupFactory
+} else if (typeof define === 'function' && define['amd']) {
+  define([], function() { return blsSetupFactory })
+} else if (typeof exports === 'object') {
+  exports["blsSetupFactory"] = blsSetupFactory
+}
 
 // Browser export
 if (typeof window === 'object') {
-  window.blsSetupFactory = blsSetupFactory;
+  window.blsSetupFactory = blsSetupFactory
 }

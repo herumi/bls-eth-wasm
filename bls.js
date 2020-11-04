@@ -665,4 +665,7 @@ if (typeof exports === 'object' && typeof module === 'object') {
 // Browser export
 if (typeof window === 'object') {
   window.blsSetupFactory = blsSetupFactory
+  const crypto = window.crypto || window.msCrypto
+  const getRandomValues = x => crypto.getRandomValues(x)
+  bls = blsSetupFactory(createBlsModule, getRandomValues)
 }

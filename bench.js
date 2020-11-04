@@ -1,5 +1,5 @@
 'use strict'
-const bls = require('./bls.js')
+const bls = require('./index.js')
 const assert = require('assert')
 const { performance } = require('perf_hooks')
 

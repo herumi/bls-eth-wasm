@@ -2,8 +2,7 @@
 const crypto = window.crypto || window.msCrypto
 const getRandomValues = x => crypto.getRandomValues(x)
 // Setup BLS
-const bls = {}
-blsSetupFactory(createBlsModule, getRandomValues, bls)
+const bls = blsSetupFactory(createBlsModule, getRandomValues)
 
 function getValue (name) { return document.getElementsByName(name)[0].value }
 function setValue (name, val) { document.getElementsByName(name)[0].value = val }

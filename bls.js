@@ -2,9 +2,9 @@
  * @param createBlsModule Async factory that returns an emcc initialized Module
  * In node, `const createBlsModule = require(`./bls_c.js`)`
  * @param getRandomValues Function to get crypto quality random values
- * @param exports Reference to an object to fill BLS methods
  */
-function blsSetupFactory(createBlsModule, getRandomValues, exports) {
+function blsSetupFactory(createBlsModule, getRandomValues) {
+  const exports = {}
   /* eslint-disable */
   exports.BN254 = 0
   exports.BN381_1 = 1

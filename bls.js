@@ -21,9 +21,9 @@ function blsSetupFactory(createBlsModule, getRandomValues) {
     const BLS_COMPILER_TIME_VAR_ADJ = exports.ethMode ? 200 : 0
     const MCLBN_COMPILED_TIME_VAR = (MCLBN_FR_UNIT_SIZE * 10 + MCLBN_FP_UNIT_SIZE) + BLS_COMPILER_TIME_VAR_ADJ
     const BLS_ID_SIZE = MCLBN_FR_UNIT_SIZE * 8
-    const BLS_SECRETKEY_SIZE = MCLBN_FP_UNIT_SIZE * 8
-    const BLS_PUBLICKEY_SIZE = BLS_SECRETKEY_SIZE * 3 * (exports.ethMode ? 1 : 2)
-    const BLS_SIGNATURE_SIZE = BLS_SECRETKEY_SIZE * 3 * (exports.ethMode ? 2 : 1)
+    const BLS_SECRETKEY_SIZE = MCLBN_FR_UNIT_SIZE * 8
+    const BLS_PUBLICKEY_SIZE = MCLBN_FP_UNIT_SIZE * 8 * 3 * (exports.ethMode ? 1 : 2)
+    const BLS_SIGNATURE_SIZE = MCLBN_FP_UNIT_SIZE * 8 * 3 * (exports.ethMode ? 2 : 1)
 
     const _malloc = size => {
       return mod._blsMalloc(size)

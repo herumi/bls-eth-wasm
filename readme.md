@@ -5,6 +5,8 @@
 This module is built with `BLS_ETH=1` for Ethereum 2.0 spec.
 
 # News
+- 2020/Nov/04 : break backward compatibility (bls.js is renamed to index.js)
+  - use blsSetupFactory to make bls instance on browser (see the top of bls-demo.js)
 - 2020/Oct/01 : add `bls.multiVerify` to verify all {sigs, pubs, msgs}.
 - 2020/Jul/06 ; `setETHmode(bls.ETH_MODE_DRAFT_07)` is default mode
 - 2020/May/19 : Call `bls.setETHmode(bls.ETH_MODE_DRAFT_07)` once after `bls.init()` for `BLS_ETH_MODE_DRAFT_07` defined at [BLS12381G2_XMD:SHA-256_SSWU_RO_](https://www.ietf.org/id/draft-irtf-cfrg-hash-to-curve-07.html#name-bls12381g2_xmdsha-256_sswu_).

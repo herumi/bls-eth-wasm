@@ -642,7 +642,7 @@ function blsSetupFactory(createBlsModule, getRandomValues) {
   exports.setRandFunc = f => {
     exports.getRandomValues = f
   }
-  exports.init = async (curveType = exports.BLS12_381) => {
+  exports.init = async (curveType = exports.ethMode ? exports.BLS12_381 : exports.BN254) => {
     exports.curveType = curveType
     exports.getRandomValues = getRandomValues
     exports.mod = await createBlsModule({

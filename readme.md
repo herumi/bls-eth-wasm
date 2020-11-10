@@ -64,6 +64,14 @@ see [bls](https://github.com/herumi/bls)
 ## For Node.js
 node test.js
 
+## Browser demo
+
+```
+cd browser-demo
+npm install
+npm start
+```
+
 # License
 
 modified new BSD License

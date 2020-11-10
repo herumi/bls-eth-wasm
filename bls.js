@@ -1,9 +1,9 @@
 /**
- * @param createBlsModule Async factory that returns an emcc initialized Module
- * In node, `const createBlsModule = require(`./bls_c.js`)`
+ * @param createModule Async factory that returns an emcc initialized Module
+ * In node, `const createModule = require(`./bls_c.js`)`
  * @param getRandomValues Function to get crypto quality random values
  */
-function blsSetupFactory(createBlsModule, getRandomValues) {
+const _blsSetupFactory = (createModule, getRandomValues) => {
   const exports = {}
   /* eslint-disable */
   exports.BN254 = 0
@@ -645,7 +645,7 @@ function blsSetupFactory(createBlsModule, getRandomValues) {
   exports.init = async (curveType = exports.ethMode ? exports.BLS12_381 : exports.BN254) => {
     exports.curveType = curveType
     exports.getRandomValues = getRandomValues
-    exports.mod = await createBlsModule({
+    exports.mod = await createModule({
       cryptoGetRandomValues: _cryptoGetRandomValues,
     })
     blsSetup(exports, curveType)
@@ -655,14 +655,14 @@ function blsSetupFactory(createBlsModule, getRandomValues) {
 
 // NodeJS export
 if (typeof exports === 'object' && typeof module === 'object') {
-  module.exports = blsSetupFactory
+  module.exports = _blsSetupFactory
 } else if (typeof define === 'function' && define['amd']) {
-  define([], function() { return blsSetupFactory })
+  define([], function() { return _blsSetupFactory })
 } else if (typeof exports === 'object') {
-  exports["blsSetupFactory"] = blsSetupFactory
+  exports["blsSetupFactory"] = _blsSetupFactory
 }
 
 // Browser export
 if (typeof window === 'object') {
-  window.blsSetupFactory = blsSetupFactory
+  window.blsSetupFactory = _blsSetupFactory
 }

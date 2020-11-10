@@ -653,16 +653,4 @@ const _blsSetupFactory = (createModule, getRandomValues) => {
   return exports
 }
 
-// NodeJS export
-if (typeof exports === 'object' && typeof module === 'object') {
-  module.exports = _blsSetupFactory
-} else if (typeof define === 'function' && define['amd']) {
-  define([], function() { return _blsSetupFactory })
-} else if (typeof exports === 'object') {
-  exports["blsSetupFactory"] = _blsSetupFactory
-}
-
-// Browser export
-if (typeof window === 'object') {
-  window.blsSetupFactory = _blsSetupFactory
-}
+module.exports = _blsSetupFactory

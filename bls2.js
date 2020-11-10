@@ -580,7 +580,7 @@
     }
     // 1 (draft-05) 2 (draft-06) 3 (draft-07)
     exports.setETHmode = (mode) => {
-      if (mod._blsSetETHmode(mode) != 0) throw new Error(`bad setETHmode ${mode}`)
+      if (mod.blsSetETHmode(mode) != 0) throw new Error(`bad setETHmode ${mode}`)
     }
     // make setter check the correctness of the order if doVerify
     exports.verifySignatureOrder = (doVerify) => {

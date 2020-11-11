@@ -1,4 +1,12 @@
-const bls = require("../../index-browser")
+// @@@ for direct include from browser
+const crypto = window.crypto || window.msCrypto // @@@
+const getRandomValues = x => crypto.getRandomValues(x) // @@@
+const bls = _blsSetupFactory(blsCreateModule, getRandomValues) // @@@
+
+window.onClickBenchmark = onClickBenchmark
+window.onClickTestSignature = onClickTestSignature
+window.onClickTestShare = onClickTestShare
+window.onClickTestMisc = onClickTestMisc
 
 function getValue (name) { return document.getElementsByName(name)[0].value }
 function setValue (name, val) { document.getElementsByName(name)[0].value = val }

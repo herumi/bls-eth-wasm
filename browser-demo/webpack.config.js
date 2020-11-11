@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
+  entry: "./src/bls-demo.js",
   devServer: {
     host: "0.0.0.0",
     port: 3000,
@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
   },
-  plugins: [new HtmlWebpackPlugin({ template: "./public/index.html" })],
+  plugins: [new HtmlWebpackPlugin({ template: "./public/bls-demo.html" })],
   resolve: {
     fallback: {
       path: false,

@@ -64,12 +64,19 @@ see [bls](https://github.com/herumi/bls)
 ## For Node.js
 node test.js
 
-## Browser demo
+## Browser demo by webpack
 
 ```
 cd browser-demo
+make
 npm install
 npm start
+```
+
+## Browser static demo
+
+```
+python -m http.server
 ```
 
 # License

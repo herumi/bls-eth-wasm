@@ -45,20 +45,6 @@ Check functions:
 - PublicKey::isValidOrder ; check the correctness of the order
 - areAllMsgDifferent ; check that all messages are different each other
 
-
-# Old eth2.0 spec
-The `msg` in the following means 40 bytes Uint8Array data.
-- `SecretKey.signHashWithDomain(msg)`
-  - sign msg by secretKey
-- `PublicKey.verifyHashWithDomain(sig, msg)`
-  - verify sig with msg by publickey
-- `Signature.verifyAggregatedHashWithDomain(pubVec, msgVec)`
-  - pubVec[i] = secVec[i].getPublicKey()
-  - sigVec[i] = secVec[i].signHashWithDomain(msgVec[i])
-  - aggSig = sum of sigVec[i]
-  - aggSig.verifyAggregatedHashWithDomain(pubVec, msgVec)
-  - see aggTest() in test.js
-
 see [bls](https://github.com/herumi/bls)
 
 ## For Node.js
@@ -67,16 +53,11 @@ node test.js
 ## Browser demo
 
 see [bls-demo](https://herumi.github.io/bls-eth-wasm/browser/demo.html).
+
+How to make `browser/bls.js`.
 ```
 cd browser
 npx webpack
-python3 -m http.server
-```
-
-## Browser static demo
-
-```
-python -m http.server
 ```
 
 # License

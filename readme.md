@@ -5,6 +5,8 @@
 This module is built with `BLS_ETH=1` for Ethereum 2.0 spec.
 
 # News
+- 2020/Nov/04 : break backward compatibility (bls.js is renamed to index.js)
+  - use blsSetupFactory to make bls instance on browser (see the top of bls-demo.js)
 - 2020/Oct/01 : add `bls.multiVerify` to verify all {sigs, pubs, msgs}.
 - 2020/Jul/06 ; `setETHmode(bls.ETH_MODE_DRAFT_07)` is default mode
 - 2020/May/19 : Call `bls.setETHmode(bls.ETH_MODE_DRAFT_07)` once after `bls.init()` for `BLS_ETH_MODE_DRAFT_07` defined at [BLS12381G2_XMD:SHA-256_SSWU_RO_](https://www.ietf.org/id/draft-irtf-cfrg-hash-to-curve-07.html#name-bls12381g2_xmdsha-256_sswu_).
@@ -43,24 +45,20 @@ Check functions:
 - PublicKey::isValidOrder ; check the correctness of the order
 - areAllMsgDifferent ; check that all messages are different each other
 
-
-# Old eth2.0 spec
-The `msg` in the following means 40 bytes Uint8Array data.
-- `SecretKey.signHashWithDomain(msg)`
-  - sign msg by secretKey
-- `PublicKey.verifyHashWithDomain(sig, msg)`
-  - verify sig with msg by publickey
-- `Signature.verifyAggregatedHashWithDomain(pubVec, msgVec)`
-  - pubVec[i] = secVec[i].getPublicKey()
-  - sigVec[i] = secVec[i].signHashWithDomain(msgVec[i])
-  - aggSig = sum of sigVec[i]
-  - aggSig.verifyAggregatedHashWithDomain(pubVec, msgVec)
-  - see aggTest() in test.js
-
 see [bls](https://github.com/herumi/bls)
 
 ## For Node.js
 node test.js
+
+## Browser demo
+
+see [bls-demo](https://herumi.github.io/bls-eth-wasm/browser/demo.html).
+
+How to make `browser/bls.js`.
+```
+cd browser
+npx webpack
+```
 
 # License
 

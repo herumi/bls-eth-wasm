@@ -1,11 +1,10 @@
-(generator => {
-  if (typeof window === 'object') {
-    const exports = {}
-    window.bls = generator(exports, false)
-  } else {
-    generator(exports, true)
-  }
-})((exports, isNodeJs) => {
+/**
+ * @param createModule Async factory that returns an emcc initialized Module
+ * In node, `const createModule = require(`./bls_c.js`)`
+ * @param getRandomValues Function to get crypto quality random values
+ */
+const _blsSetupFactory = (createModule, getRandomValues) => {
+  const exports = {}
   /* eslint-disable */
   exports.BN254 = 0
   exports.BN381_1 = 1
@@ -15,16 +14,16 @@
   exports.ETH_MODE_DRAFT_06 = 2
   exports.ETH_MODE_DRAFT_07 = 3
 
-  const setup = (exports, curveType) => {
+  function blsSetup(exports, curveType) {
     const mod = exports.mod
     const MCLBN_FP_UNIT_SIZE = 6
     const MCLBN_FR_UNIT_SIZE = exports.ethMode ? 4 : 6
     const BLS_COMPILER_TIME_VAR_ADJ = exports.ethMode ? 200 : 0
     const MCLBN_COMPILED_TIME_VAR = (MCLBN_FR_UNIT_SIZE * 10 + MCLBN_FP_UNIT_SIZE) + BLS_COMPILER_TIME_VAR_ADJ
     const BLS_ID_SIZE = MCLBN_FR_UNIT_SIZE * 8
-    const BLS_SECRETKEY_SIZE = MCLBN_FP_UNIT_SIZE * 8
-    const BLS_PUBLICKEY_SIZE = BLS_SECRETKEY_SIZE * 3 * (exports.ethMode ? 1 : 2)
-    const BLS_SIGNATURE_SIZE = BLS_SECRETKEY_SIZE * 3 * (exports.ethMode ? 2 : 1)
+    const BLS_SECRETKEY_SIZE = MCLBN_FR_UNIT_SIZE * 8
+    const BLS_PUBLICKEY_SIZE = MCLBN_FP_UNIT_SIZE * 8 * 3 * (exports.ethMode ? 1 : 2)
+    const BLS_SIGNATURE_SIZE = MCLBN_FP_UNIT_SIZE * 8 * 3 * (exports.ethMode ? 2 : 1)
 
     const _malloc = size => {
       return mod._blsMalloc(size)
@@ -630,7 +629,8 @@
     if (exports.ethMode) {
       exports.setETHmode(exports.ETH_MODE_DRAFT_07)
     }
-  } // setup()
+  } // blsSetup()
+
   const _cryptoGetRandomValues = function(p, n) {
     const a = new Uint8Array(n)
     exports.getRandomValues(a)
@@ -642,41 +642,15 @@
   exports.setRandFunc = f => {
     exports.getRandomValues = f
   }
-  exports.init = (curveType = exports.BN254) => {
+  exports.init = async (curveType = exports.ethMode ? exports.BLS12_381 : exports.BN254) => {
     exports.curveType = curveType
-    const name = 'bls_c'
-    return new Promise(resolve => {
-      if (isNodeJs) {
-        const crypto = require('crypto')
-        exports.getRandomValues = crypto.randomFillSync
-        const path = require('path')
-        const js = require(`./${name}.js`)
-        const Module = {
-          cryptoGetRandomValues : _cryptoGetRandomValues,
-          locateFile: baseName => { return path.join(__dirname, baseName) }
-        }
-        js(Module)
-          .then(_mod => {
-            exports.mod = _mod
-            setup(exports, curveType)
-            resolve()
-          })
-      } else {
-        const crypto = window.crypto || window.msCrypto
-        exports.getRandomValues = x => crypto.getRandomValues(x)
-        fetch(`./${name}.wasm`) // eslint-disable-line
-          .then(response => response.arrayBuffer())
-          .then(buffer => new Uint8Array(buffer))
-          .then(() => {
-            exports.mod = Module() // eslint-disable-line
-            exports.mod.cryptoGetRandomValues = _cryptoGetRandomValues
-            exports.mod.onRuntimeInitialized = () => {
-              setup(exports, curveType)
-              resolve()
-            }
-          })
-      }
+    exports.getRandomValues = getRandomValues
+    exports.mod = await createModule({
+      cryptoGetRandomValues: _cryptoGetRandomValues,
     })
+    blsSetup(exports, curveType)
   }
   return exports
-})
+}
+
+module.exports = _blsSetupFactory

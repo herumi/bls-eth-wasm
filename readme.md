@@ -64,13 +64,13 @@ see [bls](https://github.com/herumi/bls)
 ## For Node.js
 node test.js
 
-## Browser demo by webpack
+## Browser demo
 
+see [bls-demo](https://herumi.github.io/bls-eth-wasm/browser/demo.html).
 ```
-cd browser-demo
-make
-npm install
-npm start
+cd browser
+npx webpack
+python3 -m http.server
 ```
 
 ## Browser static demo

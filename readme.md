@@ -47,6 +47,14 @@ Check functions:
 
 see [bls](https://github.com/herumi/bls)
 
+## How to build src/bls_c.js
+Install [Emscripten](https://emscripten.org/).
+```
+cd src
+git submodule update --init
+make
+```
+
 ## For Node.js
 node test.js
 

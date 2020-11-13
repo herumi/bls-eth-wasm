@@ -54,11 +54,7 @@ node test.js
 
 see [bls-demo](https://herumi.github.io/bls-eth-wasm/browser/demo.html).
 
-How to make `browser/bls.js`.
-```
-cd browser
-npx webpack
-```
+See `browser/readme.md` to make `browser/bls.js`.
 
 # License
 

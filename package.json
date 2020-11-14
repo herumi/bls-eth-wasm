@@ -1,6 +1,6 @@
 {
   "name": "bls-eth-wasm",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "BLS signature for Node.js by WebAssembly for Ethereum 2.0",
   "main": "src/index.js",
   "scripts": {
@@ -19,15 +19,9 @@
     "src/index.js",
     "src/bls.js",
 	"src/bls_c.js",
-    "Makefile",
     "test/*.txt",
     "test/test.js",
-    "test/bench.js",
-    "browser/package.json",
-    "browser/packge-lock",
-    "browser/radme.md",
-    "browser/webpack.config.js",
-    "browser/src/index.js"
+    "test/bench.js"
   ],
   "author": "herumi <herumi@nifty.com> (https://github.com/herumi/)",
   "license": "BSD-3-Clause",

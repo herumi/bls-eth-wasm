@@ -1,14 +1,14 @@
 
-var blsCreateModule = (function() {
+var Module = (function() {
   var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
   if (typeof __filename !== 'undefined') _scriptDir = _scriptDir || __filename;
   return (
-function(blsCreateModule) {
-  blsCreateModule = blsCreateModule || {};
+function(Module) {
+  Module = Module || {};
 
 null;
 
-var Module = typeof blsCreateModule !== "undefined" ? blsCreateModule : {};
+var Module = typeof Module !== "undefined" ? Module : {};
 
 var readyPromiseResolve, readyPromiseReject;
 
@@ -68,7 +68,7 @@ var nodePath;
 
 if (ENVIRONMENT_IS_NODE) {
  if (ENVIRONMENT_IS_WORKER) {
-  scriptDirectory = require("path").dirname(scriptDirectory) + "/";
+//  scriptDirectory = require("path").dirname(scriptDirectory) + "/";
  } else {
   scriptDirectory = __dirname + "/";
  }
@@ -77,8 +77,8 @@ if (ENVIRONMENT_IS_NODE) {
   if (ret) {
    return binary ? ret : ret.toString();
   }
-  if (!nodeFS) nodeFS = require("fs");
-  if (!nodePath) nodePath = require("path");
+//  if (!nodeFS) nodeFS = require("fs");
+//  if (!nodePath) nodePath = require("path");
   filename = nodePath["normalize"](filename);
   return nodeFS["readFileSync"](filename, binary ? null : "utf8");
  };
@@ -1011,14 +1011,14 @@ noExitRuntime = true;
 run();
 
 
-  return blsCreateModule.ready
+  return Module.ready
 }
 );
 })();
 if (typeof exports === 'object' && typeof module === 'object')
-      module.exports = blsCreateModule;
+      module.exports = Module;
     else if (typeof define === 'function' && define['amd'])
-      define([], function() { return blsCreateModule; });
+      define([], function() { return Module; });
     else if (typeof exports === 'object')
-      exports["blsCreateModule"] = blsCreateModule;
+      exports["Module"] = Module;
     

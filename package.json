@@ -1,6 +1,6 @@
 {
   "name": "bls-eth-wasm",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "BLS signature for Node.js by WebAssembly for Ethereum 2.0",
   "main": "src/index.js",
   "scripts": {
@@ -16,9 +16,18 @@
     "pairing"
   ],
   "files": [
+    "src/Makefile",
     "src/index.js",
     "src/bls.js",
-	"src/bls_c.js",
+    "src/bls_c.js",
+    "browser/bls.js",
+    "browser/demo.html",
+    "browser/demo.js",
+    "browser/package-lock.json",
+    "browser/package.json",
+    "browser/readme.md",
+    "browser/src/index-browser.js",
+    "browser/webpack.config.js",
     "test/*.txt",
     "test/test.js",
     "test/bench.js"

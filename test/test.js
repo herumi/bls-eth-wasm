@@ -20,7 +20,7 @@ const curveTest = (curveType, name) => {
         console.log('all ok')
         benchAll()
       } catch (e) {
-        console.log("TEST FAIL", e)
+        console.log('TEST FAIL', e)
         assert(false)
       }
     })
@@ -74,7 +74,7 @@ function zeroTest () {
   assert(!pub.isZero())
   let sig = new bls.Signature()
   assert(sig.isZero())
-  sig = sec.sign("abc")
+  sig = sec.sign('abc')
   assert(!sig.isZero())
 }
 
@@ -252,18 +252,16 @@ function addTest () {
 }
 
 function ethAggregateTest () {
-  const fileName = "test/aggregate.txt"
+  const fileName = 'test/aggregate.txt'
   console.log(`fileName=${fileName}`)
   const rs = fs.createReadStream(fileName)
   const rl = readline.createInterface({input: rs})
-  let i = 0
   let sigVec = []
   rl.on('line', (line) => {
     const [k, v] = line.split(' ')
-    i++
-    if (k == 'sig') {
+    if (k === 'sig') {
       sigVec.push(verifyDeserializeSignature(v))
-    } else if (k == 'out') {
+    } else if (k === 'out') {
       const out = verifyDeserializeSignature(v)
       const agg = new bls.Signature()
       agg.aggregate(sigVec)
@@ -347,7 +345,6 @@ function ethFastAggregateVerifyTest () {
   const rs = fs.createReadStream(fileName)
   const rl = readline.createInterface({input: rs})
 
-  let i = 0
   let pubVec = []
   let msg = ''
   let sig = null
@@ -360,7 +357,6 @@ function ethFastAggregateVerifyTest () {
     } else if (k === 'sig') {
       sig = verifyDeserializeSignature(v)
     } else if (k === 'out') {
-      i++
       const out = v === 'true'
       if (!sig.isValidOrder()) {
         console.log('bad order')
@@ -404,7 +400,7 @@ function blsAggregateVerifyNoCheckTest () {
   })
 }
 
-function multiVerifyTestOne(n) {
+function multiVerifyTestOne (n) {
   const msgSize = 32
   const pubs = []
   const sigs = []
@@ -413,13 +409,13 @@ function multiVerifyTestOne(n) {
   for (let i = 0; i < n; i++) {
     sec.setByCSPRNG()
     pubs.push(sec.getPublicKey())
-    const msg = new Uint8Array(32)
+    const msg = new Uint8Array(msgSize)
     bls.getRandomValues(msg)
     msgs.push(msg)
     sigs.push(sec.sign(msg))
   }
   assert(bls.multiVerify(pubs, sigs, msgs))
-  if (n == 50) {
+  if (n === 50) {
     bench('multiVerify', 10, () => bls.multiVerify(pubs, sigs, msgs))
     bench('normal verify', 10, () => {
       for (let i = 0; i < n; i++) {
@@ -431,7 +427,7 @@ function multiVerifyTestOne(n) {
   assert(!bls.multiVerify(pubs, sigs, msgs))
 }
 
-function multiVerifyTest() {
+function multiVerifyTest () {
   const tbl = [1, 2, 15, 16, 17, 30, 31, 32, 33, 50, 400]
   tbl.forEach((n) => {
     console.log(`multiVerifyTestOne ${n}`)
@@ -439,25 +435,24 @@ function multiVerifyTest() {
   })
 }
 
-
 function blsDraft07 () {
-  const secHex = "0000000000000000000000000000000000000000000000000000000000000001"
-  const msgHex = "61736466"
-  const sigHex = "b45a264e0d6f8614c4640ea97bae13effd3c74c4e200e3b1596d6830debc952602a7d210eca122dc4f596fa01d7f6299106933abd29477606f64588595e18349afe22ecf2aeeeb63753e88a42ef85b24140847e05620a28422f8c30f1d33b9aa"
+  const secHex = '0000000000000000000000000000000000000000000000000000000000000001'
+  const msgHex = '61736466'
+  const sigHex = 'b45a264e0d6f8614c4640ea97bae13effd3c74c4e200e3b1596d6830debc952602a7d210eca122dc4f596fa01d7f6299106933abd29477606f64588595e18349afe22ecf2aeeeb63753e88a42ef85b24140847e05620a28422f8c30f1d33b9aa'
   ethSignOneTest(secHex, msgHex, sigHex)
 }
 
 function ethVerifyOneTest (pubHex, msgHex, sigHex, outStr) {
   const pub = bls.deserializeHexStrToPublicKey(pubHex)
   const msg = bls.fromHexStr(msgHex)
-  const expect = outStr === "true"
+  const expect = outStr === 'true'
   const sig = verifyDeserializeSignature(sigHex)
   const b = pub.verify(sig, msg)
-  assert(b == expect)
+  assert(b === expect)
 }
 
 function ethVerifyTest () {
-  const fileName = "test/verify.txt"
+  const fileName = 'test/verify.txt'
   console.log(`fileName=${fileName}`)
   const rs = fs.createReadStream(fileName)
   const rl = readline.createInterface({input: rs})
@@ -467,7 +462,7 @@ function ethVerifyTest () {
   let outStr = ''
   rl.on('line', (line) => {
     const [k, v] = line.split(' ')
-    if (k == 'pub') {
+    if (k === 'pub') {
       pubHex = v
     } else if (k === 'msg') {
       msgHex = v

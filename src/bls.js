@@ -3,13 +3,15 @@
  * In node, `const createModule = require(`./bls_c.js`)`
  * @param getRandomValues Function to get crypto quality random values
  */
+const ETH_MODE = true
+
 const _blsSetupFactory = (createModule, getRandomValues) => {
   const exports = {}
   /* eslint-disable */
   exports.BN254 = 0
   exports.BN381_1 = 1
   exports.BLS12_381 = 5
-  exports.ethMode = true
+  exports.ethMode = ETH_MODE
   exports.ETH_MODE_DRAFT_05 = 1
   exports.ETH_MODE_DRAFT_06 = 2
   exports.ETH_MODE_DRAFT_07 = 3
@@ -18,7 +20,7 @@ const _blsSetupFactory = (createModule, getRandomValues) => {
     const mod = exports.mod
     const MCLBN_FP_UNIT_SIZE = 6
     const MCLBN_FP_SIZE = MCLBN_FP_UNIT_SIZE * 8
-    const MCLBN_FR_UNIT_SIZE = exports.ethMode ? 4 : 6
+    const MCLBN_FR_UNIT_SIZE = 4
     const MCLBN_FR_SIZE = MCLBN_FR_UNIT_SIZE * 8
     const BLS_COMPILER_TIME_VAR_ADJ = exports.ethMode ? 200 : 0
     const MCLBN_COMPILED_TIME_VAR = (MCLBN_FR_UNIT_SIZE * 10 + MCLBN_FP_UNIT_SIZE) + BLS_COMPILER_TIME_VAR_ADJ

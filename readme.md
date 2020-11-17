@@ -64,6 +64,12 @@ see [bls-demo](https://herumi.github.io/bls-eth-wasm/browser/demo.html).
 
 See `browser/readme.md` to make `browser/bls.js`.
 
+## for React
+
+```
+const bls = require('bls-eth-wasm/browser')
+```
+
 # License
 
 modified new BSD License

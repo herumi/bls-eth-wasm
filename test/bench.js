@@ -10,7 +10,7 @@ const curveTest = (curveType, name) => {
         console.log(`name=${name} curve order=${bls.getCurveOrder()}`)
         benchAll()
       } catch (e) {
-        console.log("TEST FAIL", e)
+        console.log('TEST FAIL', e)
         assert(false)
       }
     })
@@ -47,4 +47,3 @@ function benchBls () {
 function benchAll () {
   benchBls()
 }
-

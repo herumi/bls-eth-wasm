@@ -12,6 +12,13 @@ This module is built with `BLS_ETH=1` for Ethereum 2.0 spec.
 - 2020/May/19 : Call `bls.setETHmode(bls.ETH_MODE_DRAFT_07)` once after `bls.init()` for `BLS_ETH_MODE_DRAFT_07` defined at [BLS12381G2_XMD:SHA-256_SSWU_RO_](https://www.ietf.org/id/draft-irtf-cfrg-hash-to-curve-07.html#name-bls12381g2_xmdsha-256_sswu_).
 - `setETHmode()` supports hash-to-curve defined at [draft-irtf-cfrg-hash-to-curve](https://cfrg.github.io/draft-irtf-cfrg-hash-to-curve/draft-irtf-cfrg-hash-to-curve.txt) at March 2020.
 
+## How to use
+The version `v0.4.2` breaks backward compatibility of the entry point.
+
+- Node.js : `const bls = require('bls-eth-wasm')`
+- React : `const bls = require('bls-eth-wasm/browser')`
+- HTML : `<script src="https://herumi.github.io/bls-eth-wasm/browser/bls.js"></script>`
+
 Init as the followings:
 
 ```

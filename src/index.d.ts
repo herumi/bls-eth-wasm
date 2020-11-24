@@ -47,7 +47,7 @@ declare class SignatureType extends Common {
 }
 
 export function init(curveType: CurveType): Promise<void>;
-export function blsInit(curveType: CurveType): Promise<void>;
+export function blsInit(curveType: CurveType): void;
 export function setETHmode(mode: EthMode): void;
 
 export function toHex(a: Uint8Array, start: number, length: number): string;

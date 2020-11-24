@@ -71,7 +71,7 @@ export function areAllMsgDifferent(msgs: Uint8Array, msgSize?: number): boolean;
 
 /**
 * return true if all pub[i].verify(sigs[i], msgs[i])
-* @param msgs msgs is array of 32-byte Uint8Array
+* @param msgs msgs is a concatenation of arrays of 32-byte Uint8Array
 */
 export function multiVerify(pubs: PublicKeyType[], sigs: SignatureType[], msgs: Uint8Array[]): boolean;
 

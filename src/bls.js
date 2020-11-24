@@ -660,7 +660,7 @@ const _blsSetupFactory = (createModule, getRandomValues) => {
     }
     /*
       return true if all pub[i].verify(sigs[i], msgs[i])
-      msgs is array of 32-byte Uint8Array
+      msgs is a concatenation of arrays of 32-byte Uint8Array
     */
     exports.multiVerify = (pubs, sigs, msgs) => {
       const MSG_SIZE = 32

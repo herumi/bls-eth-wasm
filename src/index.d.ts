@@ -48,7 +48,6 @@ declare class SignatureType extends Common {
 
 export function init(curveType: CurveType): Promise<void>;
 export function blsInit(curveType: CurveType): void;
-export function setETHmode(mode: EthMode): void;
 
 export function toHex(a: Uint8Array, start: number, length: number): string;
 export function toHexStr(a: Uint8Array): string;
@@ -79,10 +78,6 @@ export const SecretKey: typeof SecretKeyType;
 export const PublicKey: typeof PublicKeyType;
 export const Signature: typeof SignatureType;
 
-export enum EthMode {
-  DRAFT_07 = 3,
-}
-
 export enum CurveType {
   BN254 = 0,
   BLS12_381 = 5,
@@ -91,5 +86,4 @@ export enum CurveType {
 export const BN254 = CurveType.BN254;
 export const BLS12_381 = CurveType.BLS12_381;
 export const ethMode = true;
-export const ETH_MODE_DRAFT_07 = EthMode.DRAFT_07;
 export const MSG_SIZE = 32;

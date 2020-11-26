@@ -19,6 +19,7 @@
   "files": [
     "src/Makefile",
     "src/index.js",
+    "src/index.d.ts",
     "src/bls.js",
     "src/bls_c.js",
     "browser/bls.js",

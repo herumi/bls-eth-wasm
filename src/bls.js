@@ -676,7 +676,10 @@ const _blsSetupFactory = (createModule, getRandomValues) => {
       const msgPos = _malloc(MSG_SIZE * n)
       const randPos = _malloc(RAND_SIZE * n)
 
-      exports.getRandomValues(mod.HEAP8.subarray(randPos, randPos + RAND_SIZE * n))
+      // getRandomValues accepts only Uint8Array
+      const rai = mod.HEAP8.subarray(randPos, randPos + RAND_SIZE * n)
+      const rau = new Uint8Array(rai.buffer, randPos, rai.length)
+      exports.getRandomValues(rau)
       for (let i = 0; i < n; i++) {
         mod.HEAP32.set(sigs[i].a_, (sigPos + BLS_SIGNATURE_SIZE * i) / 4)
         mod.HEAP32.set(pubs[i].a_, (pubPos + BLS_PUBLICKEY_SIZE * i) / 4)

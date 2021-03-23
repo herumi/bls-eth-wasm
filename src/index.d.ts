@@ -12,6 +12,20 @@ declare class Common {
   add(rhs: this): void;
 }
 
+declare class Id extends Common {
+  constructor();
+
+  setInt(x: number): void;
+  isEqual(rhs: this): boolean;
+  deserialize(s: Uint8Array): void;
+  serialize(): Uint8Array;
+  setStr(s: string): void;
+  getStr(): string;
+  setLittleEndian(a: Uint8Array): void;
+  setLittleEndianMod(a: Uint8Array): void;
+  setByCSPRNG(): void;
+}
+
 declare class SecretKeyType extends Common {
   constructor();
 

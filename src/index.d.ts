@@ -49,8 +49,14 @@ declare class PublicKeyType extends Common {
   constructor();
 
   isZero(): boolean;
+  isEqual(rhs: this): boolean;
+  deserialize(s: Uint8Array): void;
+  serialize(): Uint8Array;
   deserializeUncompressed (s: Uint8Array): void;
   serializeUncompressed (): Uint8Array;
+  add(rhs: this): void;
+  share(msk: any, id: Id): void;
+  revcover(setVec: any, idVec: any): void;
   isValidOrder(): boolean;
   verify(signature: SignatureType, m: Uint8Array | string): boolean;
 }

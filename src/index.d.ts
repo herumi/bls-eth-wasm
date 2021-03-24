@@ -12,6 +12,23 @@ declare class Common {
   add(rhs: this): void;
 }
 
+declare class Fr extends Common {
+  constructor();
+
+  setInt(x: number): void;
+  deserialize(s: Uint8Array): void;
+  serialize(): Uint8Array;
+  setStr(s: string): void;
+  getStr(): string;
+  isZero(): boolean;
+  isOne(): boolean;
+  isEqual(rhs: this): boolean;
+  setLittleEndian(a: Uint8Array): void;
+  setLittleEndianMod(a: Uint8Array): void;
+  setByCSPRNG(): void;
+  setHashOf(a: Uint8Array): void;
+}
+
 declare class Id extends Common {
   constructor();
 

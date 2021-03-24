@@ -35,7 +35,7 @@ declare class SecretKeyType extends Common {
   deserialize(s: Uint8Array): void;
   serialize(): Uint8Array;
   add(rhs: this): void;
-  share(msk: any, id: Id): void;
+  share(msk: SecretKeyType[], id: Id): void;
   revcover(setVec: any, idVec: any): void;
   setHashOf(a: Uint8Array): void;
   setLittleEndian(a: Uint8Array): void;
@@ -55,7 +55,7 @@ declare class PublicKeyType extends Common {
   deserializeUncompressed (s: Uint8Array): void;
   serializeUncompressed (): Uint8Array;
   add(rhs: this): void;
-  share(msk: any, id: Id): void;
+  share(mpk: PublicKeyType[], id: Id): void;
   revcover(setVec: any, idVec: any): void;
   isValidOrder(): boolean;
   verify(signature: SignatureType, m: Uint8Array | string): boolean;

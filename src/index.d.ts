@@ -31,6 +31,12 @@ declare class SecretKeyType extends Common {
 
   setInt(x: number): void;
   isZero(): boolean;
+  isEqual(rhs: this): boolean;
+  deserialize(s: Uint8Array): void;
+  serialize(): Uint8Array;
+  add(rhs: this): void;
+  share(msk: any, id: Id): void;
+  revcover(setVec: any, idVec: any): void;
   setHashOf(a: Uint8Array): void;
   setLittleEndian(a: Uint8Array): void;
   setLittleEndianMod(a: Uint8Array): void;

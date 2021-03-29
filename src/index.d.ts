@@ -73,7 +73,7 @@ declare class PublicKeyType extends Common {
   serializeUncompressed (): Uint8Array;
   add(rhs: this): void;
   share(mpk: PublicKeyType[], id: Id): void;
-  revcover(setVec: any, idVec: any): void;
+  recover(secVec: SecretKeyType[], idVec: Id[]): void;
   isValidOrder(): boolean;
   verify(signature: SignatureType, m: Uint8Array | string): boolean;
 }
@@ -81,8 +81,14 @@ declare class PublicKeyType extends Common {
 declare class SignatureType extends Common {
   constructor();
 
+  isZero(): boolean;
+  isEqual(rhs: this): boolean;
+  deserialize(s): void;
+  serialize(): Uint8Array;
   deserializeUncompressed (s: Uint8Array): void;
   serializeUncompressed (): Uint8Array;
+  add(rhs: this): void;
+  recover(secVec: SecretKeyType[], idVec: Id[]): void;
   isValidOrder(): boolean;
   aggregate(others: SignatureType[]): boolean;
   fastAggregateVerify(publicKeys: PublicKeyType[], message: Uint8Array): boolean;

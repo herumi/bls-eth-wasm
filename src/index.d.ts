@@ -53,7 +53,7 @@ declare class SecretKeyType extends Common {
   serialize(): Uint8Array;
   add(rhs: this): void;
   share(msk: SecretKeyType[], id: Id): void;
-  revcover(setVec: any, idVec: any): void;
+  recover(setVec: any, idVec: any): void;
   setHashOf(a: Uint8Array): void;
   setLittleEndian(a: Uint8Array): void;
   setLittleEndianMod(a: Uint8Array): void;

@@ -83,7 +83,7 @@ declare class SignatureType extends Common {
 
   isZero(): boolean;
   isEqual(rhs: this): boolean;
-  deserialize(s): void;
+  deserialize(s: Uint8Array): void;
   serialize(): Uint8Array;
   deserializeUncompressed (s: Uint8Array): void;
   serializeUncompressed (): Uint8Array;

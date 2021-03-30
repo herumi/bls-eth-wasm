@@ -88,7 +88,7 @@ declare class SignatureType extends Common {
   deserializeUncompressed (s: Uint8Array): void;
   serializeUncompressed (): Uint8Array;
   add(rhs: this): void;
-  recover(secVec: SecretKeyType[], idVec: Id[]): void;
+  recover(secVec: SignatureType[], idVec: Id[]): void;
   isValidOrder(): boolean;
   aggregate(others: SignatureType[]): boolean;
   fastAggregateVerify(publicKeys: PublicKeyType[], message: Uint8Array): boolean;

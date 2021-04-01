@@ -12,6 +12,23 @@ declare class Common {
   add(rhs: this): void;
 }
 
+declare class Fr extends Common {
+  constructor();
+
+  setInt(x: number): void;
+  deserialize(s: Uint8Array): void;
+  serialize(): Uint8Array;
+  setStr(s: string): void;
+  getStr(): string;
+  isZero(): boolean;
+  isOne(): boolean;
+  isEqual(rhs: this): boolean;
+  setLittleEndian(a: Uint8Array): void;
+  setLittleEndianMod(a: Uint8Array): void;
+  setByCSPRNG(): void;
+  setHashOf(a: Uint8Array): void;
+}
+
 declare class Id extends Common {
   constructor();
 
@@ -31,6 +48,12 @@ declare class SecretKeyType extends Common {
 
   setInt(x: number): void;
   isZero(): boolean;
+  isEqual(rhs: this): boolean;
+  deserialize(s: Uint8Array): void;
+  serialize(): Uint8Array;
+  add(rhs: this): void;
+  share(msk: SecretKeyType[], id: Id): void;
+  recover(setVec: any, idVec: any): void;
   setHashOf(a: Uint8Array): void;
   setLittleEndian(a: Uint8Array): void;
   setLittleEndianMod(a: Uint8Array): void;
@@ -43,8 +66,14 @@ declare class PublicKeyType extends Common {
   constructor();
 
   isZero(): boolean;
+  isEqual(rhs: this): boolean;
+  deserialize(s: Uint8Array): void;
+  serialize(): Uint8Array;
   deserializeUncompressed (s: Uint8Array): void;
   serializeUncompressed (): Uint8Array;
+  add(rhs: this): void;
+  share(mpk: PublicKeyType[], id: Id): void;
+  recover(secVec: PublicKeyType[], idVec: Id[]): void;
   isValidOrder(): boolean;
   verify(signature: SignatureType, m: Uint8Array | string): boolean;
 }
@@ -52,8 +81,14 @@ declare class PublicKeyType extends Common {
 declare class SignatureType extends Common {
   constructor();
 
+  isZero(): boolean;
+  isEqual(rhs: this): boolean;
+  deserialize(s: Uint8Array): void;
+  serialize(): Uint8Array;
   deserializeUncompressed (s: Uint8Array): void;
   serializeUncompressed (): Uint8Array;
+  add(rhs: this): void;
+  recover(secVec: SignatureType[], idVec: Id[]): void;
   isValidOrder(): boolean;
   aggregate(others: SignatureType[]): boolean;
   fastAggregateVerify(publicKeys: PublicKeyType[], message: Uint8Array): boolean;

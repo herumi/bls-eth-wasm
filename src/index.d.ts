@@ -3,7 +3,7 @@ declare class Common {
 
   deserializeHexStr(s: string): void;
   serializeToHexStr(): string;
-  dump(msg?: string): string;
+  dump(msg?: string): void;
   clear(): void;
   clone(): this;
   isEqual(rhs: this): boolean

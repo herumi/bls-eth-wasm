@@ -6,7 +6,8 @@
 This module is built with `BLS_ETH=1` for Ethereum 2.0 spec.
 
 # News
-- 2021/Aug/28 improve performance of `{G1,G2}::isValidOrder()`
+- 2022/Jul/20 : 1.1 times improved
+- 2021/Aug/28 : improve performance of `{G1,G2}::isValidOrder()`
 - 2020/Nov/04 : break backward compatibility (bls.js is renamed to index.js)
   - use blsSetupFactory to make bls instance on browser (see the top of bls-demo.js)
 - 2020/Oct/01 : add `bls.multiVerify` to verify all {sigs, pubs, msgs}.

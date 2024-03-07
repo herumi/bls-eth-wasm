@@ -23,8 +23,7 @@
     "src/bls_c.js",
     "src/index.d.ts",
     "browser/bls.js",
-    "browser/package.json",
-    "browser/src/index-browser.js"
+    "browser/package.json"
   ],
   "author": "herumi <herumi@nifty.com> (https://github.com/herumi/)",
   "license": "BSD-3-Clause",

@@ -1,6 +1,6 @@
 {
   "name": "bls-eth-wasm",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "BLS signature for Node.js by WebAssembly for Ethereum 2.0",
   "main": "src/index.js",
   "scripts": {

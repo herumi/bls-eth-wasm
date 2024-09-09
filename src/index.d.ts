@@ -72,6 +72,7 @@ declare class PublicKeyType extends Common {
   deserializeUncompressed (s: Uint8Array): void;
   serializeUncompressed (): Uint8Array;
   add(rhs: this): void;
+  mul(rhs: SecretKey): void;
   share(mpk: PublicKeyType[], id: Id): void;
   recover(secVec: PublicKeyType[], idVec: Id[]): void;
   isValidOrder(): boolean;

@@ -6,6 +6,7 @@
 This module is built with `BLS_ETH=1` for Ethereum 2.0 spec.
 
 # News
+- 2024/Sep/30 : About 4% performance improvement
 - 2024/Sep/18 : About 10% performance improvement
 - 2022/Jul/20 : 1.1 times improved
 - 2021/Aug/28 : improve performance of `{G1,G2}::isValidOrder()`

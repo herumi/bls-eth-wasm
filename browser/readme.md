@@ -3,7 +3,7 @@
 How to build `browser/bls.js`.
 ```
 cd browser
-npm install webpack webpack-cli --save-dev
+pnpm install webpack webpack-cli --save-dev
 npx webpack
 python3 -m http.server
 ```

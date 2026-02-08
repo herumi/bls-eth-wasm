@@ -65,8 +65,18 @@ git submodule update --init
 make
 ```
 
+## Installation
+
+This project uses pnpm for package management.
+
+```
+pnpm install
+```
+
 ## For Node.js
-node test.js
+```
+pnpm test
+```
 
 ## Browser demo
 
